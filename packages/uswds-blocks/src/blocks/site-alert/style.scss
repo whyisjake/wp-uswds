@@ -1,0 +1,10 @@
+/**
+ * USWDS Site Alert Component Styles
+ * 
+ * Import and configure USWDS site-alert styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS site-alert component
+@include usa-site-alert;

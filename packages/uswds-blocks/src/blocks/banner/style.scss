@@ -1,0 +1,10 @@
+/**
+ * USWDS Banner Component Styles
+ * 
+ * Import and configure USWDS banner styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS banner component
+@include usa-banner;

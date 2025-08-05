@@ -1,0 +1,11 @@
+/**
+ * Editor-specific styles for USWDS Time Picker block
+ */
+
+.wp-block-wp-uswds-time-picker {
+	// Add editor-specific styles here
+	&:focus {
+		outline: 2px solid #005ea2;
+		outline-offset: 2px;
+	}
+}

@@ -1,0 +1,10 @@
+/**
+ * USWDS Validation Component Styles
+ * 
+ * Import and configure USWDS validation styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS validation component
+@include usa-validation;

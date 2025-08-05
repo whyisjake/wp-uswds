@@ -1,0 +1,10 @@
+/**
+ * USWDS Form Component Styles
+ * 
+ * Import and configure USWDS form styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS form component
+@include usa-form;

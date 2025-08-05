@@ -878,23 +878,26 @@
 							key: index,
 							className: 'usa-icon-list__item'
 						}, [
-							el('div', { key: 'content', className: 'usa-icon-list__content' }, [
-								el('span', { key: 'icon', className: `usa-icon-list__icon usa-icon--size-${size !== 'default' ? size : 'md'}` },
-									el('svg', {
-										className: 'usa-icon',
-										'aria-hidden': 'true',
-										focusable: 'false',
-										role: 'img'
-									}, `[${item.icon}]`) // Placeholder for icon
-								),
-								el(RichText, {
-									key: 'text',
-									tagName: 'span',
-									value: item.text,
-									onChange: function(value) { updateItem(index, 'text', value); },
-									placeholder: __('List item text...', 'wp-uswds')
-								})
-							]),
+							el('div', { key: 'icon', className: `usa-icon-list__icon usa-icon--size-${size !== 'default' ? size : 'md'}` },
+								el('svg', {
+									className: 'usa-icon',
+									'aria-hidden': 'true',
+									focusable: 'false',
+									role: 'img'
+								}, 
+									el('use', {
+										href: `${wp.uswdsBlocks?.spriteUrl || '/wp-content/plugins/uswds-blocks/assets/images/sprite.svg'}#${item.icon}`
+									})
+								)
+							),
+							el(RichText, {
+								key: 'content',
+								tagName: 'div',
+								className: 'usa-icon-list__content',
+								value: item.text,
+								onChange: function(value) { updateItem(index, 'text', value); },
+								placeholder: __('List item text...', 'wp-uswds')
+							}),
 							el('div', { key: 'controls', style: { marginTop: '5px' } }, [
 								el(SelectControl, {
 									key: 'icon-select',
@@ -933,21 +936,25 @@
 					return el('li', { 
 						key: index,
 						className: 'usa-icon-list__item'
-					},
-						el('div', { className: 'usa-icon-list__content' }, [
-							el('span', { key: 'icon', className: `usa-icon-list__icon usa-icon--size-${size !== 'default' ? size : 'md'}` },
-								el('svg', {
-									className: 'usa-icon',
-									'aria-hidden': 'true',
-									focusable: 'false',
-									role: 'img'
-								}, `[${item.icon}]`) // Placeholder for icon
-							),
-							item.text && el('span', {
-								key: 'text',
-								dangerouslySetInnerHTML: { __html: item.text }
-							})
-						])
+					}, [
+						el('div', { key: 'icon', className: `usa-icon-list__icon usa-icon--size-${size !== 'default' ? size : 'md'}` },
+							el('svg', {
+								className: 'usa-icon',
+								'aria-hidden': 'true',
+								focusable: 'false',
+								role: 'img'
+							}, 
+								el('use', {
+									href: `${wp.uswdsBlocks?.spriteUrl || '/wp-content/plugins/uswds-blocks/assets/images/sprite.svg'}#${item.icon}`
+								})
+							)
+						),
+						item.text && el('div', {
+							key: 'content',
+							className: 'usa-icon-list__content',
+							dangerouslySetInnerHTML: { __html: item.text }
+						})
+					]
 					);
 				})
 			);

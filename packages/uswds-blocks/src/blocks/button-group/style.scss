@@ -1,0 +1,10 @@
+/**
+ * USWDS Button Group Component Styles
+ * 
+ * Import and configure USWDS button-group styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS button-group component
+@include usa-button-group;

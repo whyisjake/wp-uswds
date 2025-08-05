@@ -1,0 +1,10 @@
+/**
+ * USWDS Radio Buttons Component Styles
+ * 
+ * Import and configure USWDS radio-buttons styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS radio-buttons component
+@include usa-radio-buttons;

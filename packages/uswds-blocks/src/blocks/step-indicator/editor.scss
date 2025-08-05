@@ -1,0 +1,11 @@
+/**
+ * Editor-specific styles for USWDS Step Indicator block
+ */
+
+.wp-block-wp-uswds-step-indicator {
+	// Add editor-specific styles here
+	&:focus {
+		outline: 2px solid #005ea2;
+		outline-offset: 2px;
+	}
+}

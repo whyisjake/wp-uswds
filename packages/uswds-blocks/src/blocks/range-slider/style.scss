@@ -1,0 +1,10 @@
+/**
+ * USWDS Range Slider Component Styles
+ * 
+ * Import and configure USWDS range-slider styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS range-slider component
+@include usa-range-slider;

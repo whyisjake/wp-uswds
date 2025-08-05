@@ -1,0 +1,10 @@
+/**
+ * USWDS Tag Component Styles
+ * 
+ * Import and configure USWDS tag styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS tag component
+@include usa-tag;

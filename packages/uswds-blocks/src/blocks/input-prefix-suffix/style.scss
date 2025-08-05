@@ -1,0 +1,10 @@
+/**
+ * USWDS Input Prefix Suffix Component Styles
+ * 
+ * Import and configure USWDS input-prefix-suffix styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS input-prefix-suffix component
+@include usa-input-prefix-suffix;

@@ -1,0 +1,10 @@
+/**
+ * USWDS Card Component Styles
+ * 
+ * Import and configure USWDS card styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS card component
+@include usa-card;

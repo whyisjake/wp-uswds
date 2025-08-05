@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wp-uswds/input-prefix-suffix",
+	"version": "1.0.0",
+	"title": "USWDS Input Prefix Suffix",
+	"category": "wp-uswds",
+	"icon": "admin-generic",
+	"description": "USWDS Input Prefix Suffix component",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"className": true
+	},
+	"attributes": {
+		"content": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "wp-uswds",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

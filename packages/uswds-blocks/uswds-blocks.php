@@ -99,6 +99,15 @@ function enqueue_block_editor_assets() {
 		true
 	);
 
+	// Make sprite URL available to JavaScript
+	wp_localize_script(
+		'uswds-blocks-editor',
+		'uswdsBlocks',
+		array(
+			'spriteUrl' => WP_USWDS_BLOCKS_PLUGIN_URL . 'assets/images/sprite.svg'
+		)
+	);
+
 	// Enqueue USWDS CSS for editor
 	wp_enqueue_style(
 		'uswds-styles',
@@ -319,6 +328,120 @@ function register_uswds_widgets() {
 	register_widget( __NAMESPACE__ . '\USWDS_Breadcrumb_Widget' );
 }
 add_action( 'widgets_init', __NAMESPACE__ . '\register_uswds_widgets' );
+
+/**
+ * Register USWDS block patterns
+ */
+function register_uswds_patterns() {
+	// Register pattern categories
+	register_block_pattern_category(
+		'uswds',
+		array(
+			'label' => __( 'USWDS Patterns', 'wp-uswds' ),
+		)
+	);
+
+	// Manually register each pattern for better control
+	register_individual_patterns();
+}
+
+/**
+ * Register individual patterns manually
+ */
+function register_individual_patterns() {
+	// Hero Banner Pattern
+	register_block_pattern(
+		'uswds/hero-banner',
+		array(
+			'title'       => __( 'USWDS Hero Banner', 'wp-uswds' ),
+			'description' => __( 'A prominent hero section with USWDS banner, heading, and call-to-action button', 'wp-uswds' ),
+			'categories'  => array( 'uswds', 'header', 'featured' ),
+			'keywords'    => array( 'hero', 'banner', 'header', 'landing' ),
+			'content'     => get_pattern_content( 'hero-banner' ),
+		)
+	);
+
+	// Process Steps Pattern
+	register_block_pattern(
+		'uswds/process-steps',
+		array(
+			'title'       => __( 'USWDS Process Steps', 'wp-uswds' ),
+			'description' => __( 'A step-by-step process layout using USWDS step indicator and process list components', 'wp-uswds' ),
+			'categories'  => array( 'uswds', 'text', 'featured' ),
+			'keywords'    => array( 'process', 'steps', 'workflow', 'guide' ),
+			'content'     => get_pattern_content( 'process-steps' ),
+		)
+	);
+
+	// Alert Section Pattern
+	register_block_pattern(
+		'uswds/alert-section',
+		array(
+			'title'       => __( 'USWDS Alert Section', 'wp-uswds' ),
+			'description' => __( 'Multiple USWDS alerts demonstrating different alert types for notifications and important information', 'wp-uswds' ),
+			'categories'  => array( 'uswds', 'text', 'call-to-action' ),
+			'keywords'    => array( 'alerts', 'notifications', 'emergency', 'warning', 'info' ),
+			'content'     => get_pattern_content( 'alert-section' ),
+		)
+	);
+
+	// Card Grid Pattern
+	register_block_pattern(
+		'uswds/card-grid',
+		array(
+			'title'       => __( 'USWDS Card Grid', 'wp-uswds' ),
+			'description' => __( 'A responsive grid of USWDS cards showcasing services, features, or content categories', 'wp-uswds' ),
+			'categories'  => array( 'uswds', 'text', 'featured' ),
+			'keywords'    => array( 'cards', 'grid', 'services', 'features', 'layout' ),
+			'content'     => get_pattern_content( 'card-grid' ),
+		)
+	);
+
+	// Summary Box Highlight Pattern
+	register_block_pattern(
+		'uswds/summary-box-highlight',
+		array(
+			'title'       => __( 'USWDS Summary Box Highlight', 'wp-uswds' ),
+			'description' => __( 'A summary box pattern highlighting key information with supporting content and call-to-action', 'wp-uswds' ),
+			'categories'  => array( 'uswds', 'text', 'call-to-action' ),
+			'keywords'    => array( 'summary', 'highlight', 'important', 'key information' ),
+			'content'     => get_pattern_content( 'summary-box-highlight' ),
+		)
+	);
+
+	// Landing Page Layout Pattern
+	register_block_pattern(
+		'uswds/landing-page-layout',
+		array(
+			'title'       => __( 'USWDS Landing Page Layout', 'wp-uswds' ),
+			'description' => __( 'Complete landing page layout with banner, hero section, services grid, and key information', 'wp-uswds' ),
+			'categories'  => array( 'uswds', 'featured', 'header' ),
+			'keywords'    => array( 'landing', 'homepage', 'government', 'layout', 'complete' ),
+			'content'     => get_pattern_content( 'landing-page-layout' ),
+		)
+	);
+}
+
+/**
+ * Get pattern content from file
+ */
+function get_pattern_content( $pattern_name ) {
+	$pattern_file = WP_USWDS_BLOCKS_PLUGIN_PATH . 'patterns/' . $pattern_name . '.php';
+	
+	if ( ! file_exists( $pattern_file ) ) {
+		return '';
+	}
+	
+	$file_content = file_get_contents( $pattern_file );
+	
+	// Extract content after the closing PHP tag
+	if ( preg_match( '/\?>\s*(.+)/s', $file_content, $match ) ) {
+		return trim( $match[1] );
+	}
+	
+	return '';
+}
+add_action( 'init', __NAMESPACE__ . '\register_uswds_patterns' );
 
 /**
  * Server-side render for auto-generated breadcrumbs
