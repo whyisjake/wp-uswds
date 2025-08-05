@@ -1,0 +1,11 @@
+/**
+ * Editor-specific styles for USWDS Memorable Date block
+ */
+
+.wp-block-wp-uswds-memorable-date {
+	// Add editor-specific styles here
+	&:focus {
+		outline: 2px solid #005ea2;
+		outline-offset: 2px;
+	}
+}

@@ -1,0 +1,10 @@
+/**
+ * USWDS In Page Navigation Component Styles
+ * 
+ * Import and configure USWDS in-page-navigation styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS in-page-navigation component
+@include usa-in-page-navigation;

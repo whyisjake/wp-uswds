@@ -1,0 +1,10 @@
+/**
+ * USWDS Input Mask Component Styles
+ * 
+ * Import and configure USWDS input-mask styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS input-mask component
+@include usa-input-mask;

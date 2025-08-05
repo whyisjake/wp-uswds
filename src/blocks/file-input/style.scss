@@ -1,0 +1,10 @@
+/**
+ * USWDS File Input Component Styles
+ * 
+ * Import and configure USWDS file-input styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS file-input component
+@include usa-file-input;

@@ -1,0 +1,10 @@
+/**
+ * USWDS Modal Component Styles
+ * 
+ * Import and configure USWDS modal styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS modal component
+@include usa-modal;

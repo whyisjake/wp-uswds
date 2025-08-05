@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wp-uswds/accordion",
+	"version": "1.0.0",
+	"title": "USWDS Accordion",
+	"category": "wp-uswds",
+	"icon": "admin-generic",
+	"description": "USWDS Accordion component",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"className": true
+	},
+	"attributes": {
+		"items": {
+			"type": "array",
+			"default": [
+				{
+					"title": "First Amendment",
+					"content": "Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the Government for a redress of grievances."
+				}
+			]
+		},
+		"bordered": {
+			"type": "boolean",
+			"default": false
+		},
+		"multiselectable": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"textdomain": "wp-uswds",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

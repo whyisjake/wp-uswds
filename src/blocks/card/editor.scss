@@ -1,0 +1,11 @@
+/**
+ * Editor-specific styles for USWDS Card block
+ */
+
+.wp-block-wp-uswds-card {
+	// Add editor-specific styles here
+	&:focus {
+		outline: 2px solid #005ea2;
+		outline-offset: 2px;
+	}
+}

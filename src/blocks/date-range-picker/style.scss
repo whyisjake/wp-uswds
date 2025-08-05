@@ -1,0 +1,10 @@
+/**
+ * USWDS Date Range Picker Component Styles
+ * 
+ * Import and configure USWDS date-range-picker styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS date-range-picker component
+@include usa-date-range-picker;

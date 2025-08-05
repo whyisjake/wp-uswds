@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wp-uswds/button",
+	"version": "1.0.0",
+	"title": "USWDS Button",
+	"category": "wp-uswds",
+	"icon": "button",
+	"description": "A button component following USWDS design patterns.",
+	"example": {
+		"attributes": {
+			"text": "Get started",
+			"variant": "default",
+			"size": "default"
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"className": true,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Button"
+		},
+		"url": {
+			"type": "string",
+			"default": ""
+		},
+		"variant": {
+			"type": "string",
+			"default": "default",
+			"enum": ["default", "secondary", "accent-cool", "accent-warm", "base", "outline", "big", "unstyled"]
+		},
+		"size": {
+			"type": "string",
+			"default": "default",
+			"enum": ["default", "big"]
+		},
+		"opensInNewTab": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"textdomain": "wp-uswds",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

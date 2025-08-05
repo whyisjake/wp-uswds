@@ -1,0 +1,10 @@
+/**
+ * USWDS Tooltip Component Styles
+ * 
+ * Import and configure USWDS tooltip styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS tooltip component
+@include usa-tooltip;

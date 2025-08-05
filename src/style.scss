@@ -1,0 +1,11 @@
+/**
+ * USWDS Base Styles
+ * Import core USWDS styles for all blocks
+ */
+
+// Import USWDS styles - try the dist version first
+@import "@uswds/uswds/dist/css/uswds.min.css";
+
+// Block-specific styles
+@import "blocks/alert/style";
+@import "blocks/button/style";

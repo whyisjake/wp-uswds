@@ -1,0 +1,10 @@
+/**
+ * USWDS Combo Box Component Styles
+ * 
+ * Import and configure USWDS combo-box styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS combo-box component
+@include usa-combo-box;

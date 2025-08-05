@@ -1,0 +1,10 @@
+/**
+ * USWDS Side Navigation Component Styles
+ * 
+ * Import and configure USWDS side-navigation styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS side-navigation component
+@include usa-side-navigation;

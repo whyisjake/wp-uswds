@@ -1,0 +1,10 @@
+/**
+ * USWDS Breadcrumb Component Styles
+ * 
+ * Import and configure USWDS breadcrumb styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS breadcrumb component
+@include usa-breadcrumb;

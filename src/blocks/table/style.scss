@@ -1,0 +1,10 @@
+/**
+ * USWDS Table Component Styles
+ * 
+ * Import and configure USWDS table styles for WordPress blocks
+ */
+
+@use "@uswds/uswds/packages/uswds-core" as *;
+
+// Import USWDS table component
+@include usa-table;
