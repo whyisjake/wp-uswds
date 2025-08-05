@@ -1,0 +1,43 @@
+{
+  "name": "@wp-uswds/blocks",
+  "version": "1.0.0",
+  "description": "USWDS Gutenberg blocks library for WordPress",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "dev": "wp-scripts start",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "format": "wp-scripts format"
+  },
+  "dependencies": {
+    "@wordpress/block-editor": "^12.0.0",
+    "@wordpress/blocks": "^12.0.0",
+    "@wordpress/components": "^25.0.0",
+    "@wordpress/compose": "^6.0.0",
+    "@wordpress/data": "^9.0.0",
+    "@wordpress/element": "^5.0.0",
+    "@wordpress/i18n": "^4.0.0",
+    "@wordpress/icons": "^9.0.0",
+    "@uswds/uswds": "^3.8.1",
+    "classnames": "^2.3.2"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0",
+    "sass-loader": "^13.0.0",
+    "style-loader": "^3.3.0",
+    "css-loader": "^6.8.0"
+  },
+  "keywords": [
+    "wordpress",
+    "gutenberg",
+    "blocks",
+    "uswds",
+    "government"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "license": "GPL-2.0-or-later"
+}

@@ -1,0 +1,116 @@
+/**
+ * Widget Styles
+ * 
+ * WordPress widgets integration with USWDS components
+ */
+
+.widget {
+	@include u-margin-bottom(4);
+	
+	.widget-title {
+		@include u-font-size('lg');
+		@include u-margin-bottom(2);
+		@include u-border-bottom(2, 'primary');
+		@include u-padding-bottom(1);
+	}
+	
+	// Lists in widgets
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		
+		li {
+			@include u-margin-bottom(1);
+			
+			a {
+				@extend .usa-link;
+				text-decoration: none;
+				
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+	
+	// Search widget
+	&.widget_search {
+		.search-form {
+			@extend .usa-search;
+			@extend .usa-search--small;
+		}
+	}
+	
+	// Recent posts widget
+	&.widget_recent_entries {
+		.post-date {
+			@include u-font-size('sm');
+			@include u-color('base-dark');
+			display: block;
+		}
+	}
+	
+	// Categories widget
+	&.widget_categories {
+		.cat-item {
+			@include u-display('flex');
+			@include u-flex('justify-between');
+			
+			.post-count {
+				@extend .usa-tag;
+				@include u-font-size('xs');
+			}
+		}
+	}
+	
+	// Tag cloud widget
+	&.widget_tag_cloud {
+		.tagcloud {
+			a {
+				@extend .usa-tag;
+				@include u-margin-right(1);
+				@include u-margin-bottom(1);
+				display: inline-block;
+				text-decoration: none;
+				
+				&:hover {
+					@include u-bg('primary-dark');
+				}
+			}
+		}
+	}
+	
+	// Calendar widget
+	&.widget_calendar {
+		table {
+			@extend .usa-table;
+			@extend .usa-table--borderless;
+			width: 100%;
+		}
+		
+		caption {
+			@include u-font-weight('bold');
+			@include u-margin-bottom(2);
+		}
+		
+		th,
+		td {
+			@include u-text-align('center');
+			@include u-padding(1);
+		}
+		
+		#today {
+			@include u-bg('primary');
+			@include u-color('white');
+			@include u-text('bold');
+		}
+	}
+	
+	// Text widget
+	&.widget_text {
+		.textwidget {
+			@extend .usa-prose;
+		}
+	}
+}

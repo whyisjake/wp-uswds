@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wp-uswds/alert",
+	"version": "1.0.0",
+	"title": "USWDS Alert",
+	"category": "wp-uswds",
+	"icon": "warning",
+	"description": "Keep users informed of important and sometimes time-sensitive changes.",
+	"example": {
+		"attributes": {
+			"type": "info",
+			"heading": "Informative status",
+			"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"className": true
+	},
+	"attributes": {
+		"type": {
+			"type": "string",
+			"default": "info",
+			"enum": ["info", "warning", "error", "success", "emergency"]
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"content": {
+			"type": "string",
+			"default": ""
+		},
+		"slim": {
+			"type": "boolean",
+			"default": false
+		},
+		"noIcon": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"textdomain": "wp-uswds",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

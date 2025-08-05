@@ -1,0 +1,17 @@
+/**
+ * USWDS WordPress Theme Styles
+ * 
+ * Main stylesheet that imports USWDS and adds theme-specific customizations
+ */
+
+// Import USWDS styles - using dist version for simplicity
+@import "@uswds/uswds/dist/css/uswds.min.css";
+
+// WordPress-specific overrides and enhancements
+@import 'wordpress/wp-admin-bar';
+@import 'wordpress/gutenberg';
+@import 'wordpress/accessibility';
+@import 'wordpress/forms';
+@import 'wordpress/navigation';
+@import 'wordpress/comments';
+@import 'wordpress/widgets';

@@ -1,0 +1,105 @@
+/**
+ * Comments Styles
+ * 
+ * WordPress comments integration with USWDS components
+ */
+
+.comments-area {
+	@include u-margin-top(4);
+	@include u-padding-top(4);
+	@include u-border-top(1, 'gray-30');
+}
+
+.comment-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	
+	.comment {
+		@include u-margin-bottom(4);
+		@include u-padding(3);
+		@include u-bg('gray-5');
+		@include u-border-left(4, 'primary');
+		
+		.comment-meta {
+			@include u-margin-bottom(2);
+			
+			.comment-author {
+				@include u-font-weight('bold');
+			}
+			
+			.comment-metadata {
+				@include u-font-size('sm');
+				@include u-color('base-dark');
+				
+				a {
+					@include u-color('base-dark');
+					text-decoration: none;
+					
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+		
+		.comment-content {
+			@extend .usa-prose;
+		}
+		
+		.reply {
+			@include u-margin-top(2);
+			
+			.comment-reply-link {
+				@extend .usa-button;
+				@extend .usa-button--outline;
+				@include u-font-size('sm');
+			}
+		}
+		
+		&.bypostauthor {
+			@include u-border-left(4, 'secondary');
+			
+			.comment-author::after {
+				content: ' (Author)';
+				@include u-font-size('xs');
+				@include u-color('secondary');
+				@include u-font-weight('normal');
+			}
+		}
+	}
+	
+	.children {
+		list-style: none;
+		@include u-margin-left(4);
+		@include u-margin-top(3);
+	}
+}
+
+.comment-respond {
+	@include u-margin-top(4);
+	
+	.comment-reply-title {
+		@include u-font-size('lg');
+		@include u-margin-bottom(3);
+	}
+	
+	.comment-form {
+		.comment-notes {
+			@include u-font-size('sm');
+			@include u-color('base-dark');
+			@include u-margin-bottom(3);
+		}
+		
+		.required {
+			@include u-color('secondary-dark');
+		}
+	}
+}
+
+.no-comments {
+	@include u-font-style('italic');
+	@include u-color('base-dark');
+	@include u-text-align('center');
+	@include u-padding(4);
+}

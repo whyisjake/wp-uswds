@@ -1,0 +1,23 @@
+/**
+ * WordPress Admin Bar Styles
+ * 
+ * Ensure USWDS styles work properly with WordPress admin bar
+ */
+
+.admin-bar {
+	.usa-header {
+		top: 32px;
+		
+		@media screen and (max-width: 782px) {
+			top: 46px;
+		}
+	}
+	
+	.usa-modal__main {
+		top: 32px;
+		
+		@media screen and (max-width: 782px) {
+			top: 46px;
+		}
+	}
+}

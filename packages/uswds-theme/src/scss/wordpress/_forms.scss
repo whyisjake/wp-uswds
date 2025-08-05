@@ -1,0 +1,87 @@
+/**
+ * Form Styles
+ * 
+ * WordPress form integration with USWDS form components
+ */
+
+// Comment forms
+.comment-form {
+	.form-submit {
+		.submit {
+			@extend .usa-button;
+		}
+	}
+	
+	.comment-form-comment {
+		textarea {
+			@extend .usa-textarea;
+		}
+	}
+	
+	.comment-form-author,
+	.comment-form-email,
+	.comment-form-url {
+		input[type="text"],
+		input[type="email"],
+		input[type="url"] {
+			@extend .usa-input;
+		}
+	}
+}
+
+// Search forms
+.search-form {
+	@extend .usa-search;
+	
+	.search-field {
+		@extend .usa-input;
+	}
+	
+	.search-submit {
+		@extend .usa-button;
+		@include u-bg('primary');
+		@include u-color('white');
+	}
+}
+
+// Contact forms (Contact Form 7, Gravity Forms, etc.)
+.wpcf7-form,
+.gform_wrapper {
+	input[type="text"],
+	input[type="email"],
+	input[type="tel"],
+	input[type="url"],
+	input[type="number"],
+	input[type="date"] {
+		@extend .usa-input;
+	}
+	
+	textarea {
+		@extend .usa-textarea;
+	}
+	
+	select {
+		@extend .usa-select;
+	}
+	
+	input[type="checkbox"] {
+		@extend .usa-checkbox__input;
+		
+		+ label {
+			@extend .usa-checkbox__label;
+		}
+	}
+	
+	input[type="radio"] {
+		@extend .usa-radio__input;
+		
+		+ label {
+			@extend .usa-radio__label;
+		}
+	}
+	
+	input[type="submit"],
+	button[type="submit"] {
+		@extend .usa-button;
+	}
+}

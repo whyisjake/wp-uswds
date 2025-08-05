@@ -1,0 +1,88 @@
+/**
+ * Navigation Styles
+ * 
+ * WordPress navigation integration with USWDS navigation components
+ */
+
+// WordPress navigation classes mapped to USWDS
+.menu {
+	@extend .usa-nav__primary;
+	
+	.menu-item {
+		@extend .usa-nav__primary-item;
+		
+		.menu-item {
+			@extend .usa-nav__submenu-item;
+		}
+	}
+	
+	.menu-item-has-children {
+		> .sub-menu {
+			@extend .usa-nav__submenu;
+		}
+	}
+	
+	a {
+		@extend .usa-nav__link;
+		
+		.sub-menu & {
+			@extend .usa-nav__submenu-link;
+		}
+	}
+}
+
+// Post navigation
+.post-navigation,
+.posts-navigation {
+	.nav-links {
+		@extend .usa-pagination;
+		
+		.nav-previous,
+		.nav-next {
+			@extend .usa-pagination__item;
+			
+			a {
+				@extend .usa-pagination__button;
+			}
+		}
+	}
+}
+
+// Pagination
+.pagination {
+	@extend .usa-pagination;
+	
+	.page-numbers {
+		@extend .usa-pagination__button;
+		
+		&.current {
+			@extend .usa-pagination__button;
+			@include u-bg('primary');
+			@include u-color('white');
+		}
+		
+		&.next,
+		&.prev {
+			@extend .usa-pagination__arrow;
+		}
+	}
+}
+
+// Breadcrumbs (if using breadcrumb plugins)
+.breadcrumbs,
+.breadcrumb,
+.usa-breadcrumb {
+	@extend .usa-breadcrumb;
+	
+	ol {
+		@extend .usa-breadcrumb__list;
+	}
+	
+	li {
+		@extend .usa-breadcrumb__list-item;
+	}
+	
+	a {
+		@extend .usa-breadcrumb__link;
+	}
+}

@@ -1,0 +1,53 @@
+/**
+ * Accessibility Enhancements
+ * 
+ * Additional accessibility improvements for WordPress + USWDS
+ */
+
+// Screen reader text
+.screen-reader-text {
+	@include u-sr-only();
+}
+
+// Skip links
+.usa-skipnav {
+	@include u-bg('primary-dark');
+	@include u-color('white');
+	@include u-padding(2);
+	@include u-text-decoration('none');
+	position: absolute;
+	top: -100px;
+	left: 0;
+	z-index: 9999;
+	
+	&:focus {
+		top: 0;
+	}
+}
+
+// Focus management
+.usa-focus {
+	@include u-add-box-shadow(2, 'primary', 0.25);
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+	.usa-button {
+		border: 2px solid;
+	}
+	
+	.usa-link {
+		text-decoration: underline;
+	}
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}

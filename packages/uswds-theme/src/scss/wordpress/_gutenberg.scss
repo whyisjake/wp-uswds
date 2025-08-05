@@ -1,0 +1,57 @@
+/**
+ * Gutenberg Block Editor Styles
+ * 
+ * Ensure USWDS styles work properly with Gutenberg blocks
+ */
+
+// Block alignments
+.alignwide {
+	@include u-margin-x('auto');
+	max-width: units('desktop');
+}
+
+.alignfull {
+	@include u-margin-x('auto');
+	max-width: 100%;
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+}
+
+// Core block styling
+.wp-block-image {
+	.usa-image {
+		max-width: 100%;
+		height: auto;
+	}
+}
+
+.wp-block-quote {
+	@extend .usa-prose;
+	
+	cite {
+		@include u-font-family('sans');
+		@include u-font-size('sm');
+		@include u-text('italic');
+		@include u-color('base-dark');
+	}
+}
+
+.wp-block-pullquote {
+	@include u-padding(4);
+	@include u-border-left(1, 'primary');
+	@include u-bg('gray-5');
+	
+	blockquote {
+		@include u-font-size('lg');
+		@include u-line-height(3);
+		margin: 0;
+	}
+}
+
+// Navigation block
+.wp-block-navigation-item {
+	&.current-menu-item > .wp-block-navigation-item__content {
+		@include u-text('bold');
+		@include u-color('primary');
+	}
+}

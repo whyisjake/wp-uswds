@@ -1,0 +1,36 @@
+{
+  "name": "@wp-uswds/theme",
+  "version": "1.0.0",
+  "description": "WordPress theme based on the U.S. Web Design System (USWDS)",
+  "main": "index.php",
+  "scripts": {
+    "build": "wp-scripts build",
+    "dev": "wp-scripts start",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:php": "composer run lint",
+    "format": "wp-scripts format"
+  },
+  "dependencies": {
+    "@wp-uswds/blocks": "^1.0.0",
+    "@uswds/uswds": "^3.8.1"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0",
+    "mini-css-extract-plugin": "^2.7.0",
+    "sass-loader": "^13.0.0",
+    "css-loader": "^6.8.0"
+  },
+  "keywords": [
+    "wordpress",
+    "theme",
+    "uswds",
+    "government",
+    "accessibility"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "license": "GPL-2.0-or-later"
+}
