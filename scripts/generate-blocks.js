@@ -4,8 +4,10 @@
  * USWDS Component Reference Tool
  * 
  * This script provides component discovery and reference information
- * for USWDS components. It no longer generates blocks to avoid
- * overwriting the manually crafted blocks in simple-blocks.js.
+ * for USWDS components. It analyzes the current block library in
+ * simple-blocks.js and suggests missing components for future development.
+ * 
+ * Current Status: 40+ blocks implemented including comprehensive form library
  */
 
 const fs = require('fs');
@@ -66,7 +68,7 @@ const USWDS_COMPONENTS = [
 
 class ComponentReferenceGenerator {
 	constructor() {
-		this.pluginDir = '/Users/whyisjake/Sites/Studio/wp-content/plugins/uswds-blocks';
+		this.pluginDir = path.join(__dirname, '..', 'packages', 'uswds-blocks');
 		this.simpleBlocksFile = path.join(this.pluginDir, 'simple-blocks.js');
 	}
 

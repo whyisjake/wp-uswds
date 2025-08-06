@@ -4,17 +4,14 @@
   "description": "WordPress Gutenberg blocks and theme based on the U.S. Web Design System (USWDS)",
   "main": "index.js",
   "scripts": {
-    "build": "npm run install:assets && npm run build:blocks",
-    "build:blocks": "cd packages/uswds-blocks && npm run build",
-    "build:theme": "cd packages/uswds-theme && npm run build",
-    "dev": "npm run dev:blocks",
-    "dev:blocks": "cd packages/uswds-blocks && npm run start",
-    "dev:theme": "cd packages/uswds-theme && npm run start",
     "install:assets": "node scripts/install-uswds-assets.js",
     "generate:blocks": "node scripts/generate-blocks.js",
     "deploy": "node scripts/deploy.js",
     "nvm:use": "nvm use",
-    "preinstall": "node scripts/check-node-version.js"
+    "preinstall": "node scripts/check-node-version.js",
+    "verify:setup": "node scripts/verify-setup.js",
+    "build:theme": "cd packages/uswds-theme && npm run build",
+    "dev:theme": "cd packages/uswds-theme && npm run start"
   },
   "engines": {
     "node": ">=18.0.0",
