@@ -15,7 +15,7 @@
 	<!-- /wp:heading -->
 
 	<!-- wp:wp-uswds/alert {"type":"emergency","heading":"Emergency Alert"} -->
-	<div class="usa-alert usa-alert--emergency">
+	<div class="wp-block-wp-uswds-alert usa-alert usa-alert--emergency">
 		<div class="usa-alert__body">
 			<h4 class="usa-alert__heading">Emergency Alert</h4>
 			<!-- wp:paragraph -->
@@ -30,7 +30,7 @@
 	<!-- /wp:spacer -->
 
 	<!-- wp:wp-uswds/alert {"type":"error","heading":"Error Alert"} -->
-	<div class="usa-alert usa-alert--error">
+	<div class="wp-block-wp-uswds-alert usa-alert usa-alert--error">
 		<div class="usa-alert__body">
 			<h4 class="usa-alert__heading">Error Alert</h4>
 			<!-- wp:paragraph -->
@@ -45,7 +45,7 @@
 	<!-- /wp:spacer -->
 
 	<!-- wp:wp-uswds/alert {"type":"warning","heading":"Warning Alert"} -->
-	<div class="usa-alert usa-alert--warning">
+	<div class="wp-block-wp-uswds-alert usa-alert usa-alert--warning">
 		<div class="usa-alert__body">
 			<h4 class="usa-alert__heading">Warning Alert</h4>
 			<!-- wp:paragraph -->
@@ -60,7 +60,7 @@
 	<!-- /wp:spacer -->
 
 	<!-- wp:wp-uswds/alert {"type":"success","heading":"Success Alert"} -->
-	<div class="usa-alert usa-alert--success">
+	<div class="wp-block-wp-uswds-alert usa-alert usa-alert--success">
 		<div class="usa-alert__body">
 			<h4 class="usa-alert__heading">Success Alert</h4>
 			<!-- wp:paragraph -->
@@ -75,7 +75,7 @@
 	<!-- /wp:spacer -->
 
 	<!-- wp:wp-uswds/alert {"type":"info","heading":"Information Alert"} -->
-	<div class="usa-alert usa-alert--info">
+	<div class="wp-block-wp-uswds-alert usa-alert usa-alert--info">
 		<div class="usa-alert__body">
 			<h4 class="usa-alert__heading">Information Alert</h4>
 			<!-- wp:paragraph -->

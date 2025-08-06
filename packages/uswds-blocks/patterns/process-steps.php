@@ -86,7 +86,7 @@
 	<!-- wp:group {"style":{"spacing":{"padding":{"top":"2rem"}}},"layout":{"type":"flex","justifyContent":"center"}} -->
 	<div class="wp-block-group" style="padding-top:2rem">
 		<!-- wp:wp-uswds/button {"text":"Continue Application","url":"#","variant":"default"} -->
-		<a class="usa-button" href="#">Continue Application</a>
+		<a class="wp-block-wp-uswds-button usa-button" href="#">Continue Application</a>
 		<!-- /wp:wp-uswds/button -->
 	</div>
 	<!-- /wp:group -->

@@ -33,7 +33,7 @@
 						<!-- /wp:paragraph -->
 						
 						<!-- wp:wp-uswds/button {"text":"Start Application","url":"#"} -->
-						<a class="usa-button" href="#">Start Application</a>
+						<a class="wp-block-wp-uswds-button usa-button" href="#">Start Application</a>
 						<!-- /wp:wp-uswds/button -->
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 						<!-- /wp:paragraph -->
 						
 						<!-- wp:wp-uswds/button {"text":"Check Status","url":"#"} -->
-						<a class="usa-button" href="#">Check Status</a>
+						<a class="wp-block-wp-uswds-button usa-button" href="#">Check Status</a>
 						<!-- /wp:wp-uswds/button -->
 					</div>
 				</div>
@@ -85,7 +85,7 @@
 						<!-- /wp:paragraph -->
 						
 						<!-- wp:wp-uswds/button {"text":"Browse Resources","url":"#"} -->
-						<a class="usa-button" href="#">Browse Resources</a>
+						<a class="wp-block-wp-uswds-button usa-button" href="#">Browse Resources</a>
 						<!-- /wp:wp-uswds/button -->
 					</div>
 				</div>
@@ -119,7 +119,7 @@
 						<!-- /wp:paragraph -->
 						
 						<!-- wp:wp-uswds/button {"text":"Contact Us","url":"#"} -->
-						<a class="usa-button" href="#">Contact Us</a>
+						<a class="wp-block-wp-uswds-button usa-button" href="#">Contact Us</a>
 						<!-- /wp:wp-uswds/button -->
 					</div>
 				</div>
@@ -145,7 +145,7 @@
 						<!-- /wp:paragraph -->
 						
 						<!-- wp:wp-uswds/button {"text":"View Updates","url":"#"} -->
-						<a class="usa-button" href="#">View Updates</a>
+						<a class="wp-block-wp-uswds-button usa-button" href="#">View Updates</a>
 						<!-- /wp:wp-uswds/button -->
 					</div>
 				</div>
@@ -171,7 +171,7 @@
 						<!-- /wp:paragraph -->
 						
 						<!-- wp:wp-uswds/button {"text":"Register Now","url":"#"} -->
-						<a class="usa-button" href="#">Register Now</a>
+						<a class="wp-block-wp-uswds-button usa-button" href="#">Register Now</a>
 						<!-- /wp:wp-uswds/button -->
 					</div>
 				</div>

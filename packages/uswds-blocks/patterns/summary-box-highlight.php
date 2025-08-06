@@ -104,7 +104,7 @@
 				<!-- /wp:paragraph -->
 
 				<!-- wp:wp-uswds/button {"text":"Start Application","url":"#"} -->
-				<a class="usa-button" href="#">Start Application</a>
+				<a class="wp-block-wp-uswds-button usa-button" href="#">Start Application</a>
 				<!-- /wp:wp-uswds/button -->
 			</div>
 			<!-- /wp:group -->
