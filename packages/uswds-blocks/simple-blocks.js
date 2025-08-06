@@ -95,9 +95,11 @@
 			const { attributes } = props;
 			const { type, heading, slim } = attributes;
 
-			return el('div', {
+			const blockProps = useBlockProps.save({
 				className: `usa-alert usa-alert--${type}${slim ? ' usa-alert--slim' : ''}`
-			},
+			});
+
+			return el('div', blockProps,
 				el('div', { className: 'usa-alert__body' }, [
 					!slim && heading && el('h4', {
 						key: 'heading',
@@ -180,16 +182,22 @@
 			const className = `usa-button${variant !== 'default' ? ` usa-button--${variant}` : ''}`;
 
 			if (url) {
-				return el('a', {
+				const blockProps = useBlockProps.save({
 					className: className,
-					href: url,
+					href: url
+				});
+				return el('a', {
+					...blockProps,
 					dangerouslySetInnerHTML: { __html: text }
 				});
 			}
 
-			return el('button', {
+			const blockProps = useBlockProps.save({
 				className: className,
-				type: 'button',
+				type: 'button'
+			});
+			return el('button', {
+				...blockProps,
 				dangerouslySetInnerHTML: { __html: text }
 			});
 		}
@@ -3983,6 +3991,306 @@
 					'aria-live': 'polite'
 				}, `You can enter up to ${maxLength} characters`)
 			]);
+		}
+	});
+
+	// Register Table Block
+	registerBlockType('wp-uswds/table', {
+		title: __('USWDS Table', 'wp-uswds'),
+		description: __('Display structured data in a table with USWDS styling and accessibility features.', 'wp-uswds'),
+		category: 'wp-uswds',
+		icon: 'editor-table',
+		attributes: {
+			caption: {
+				type: 'string',
+				default: ''
+			},
+			variant: {
+				type: 'string',
+				default: 'default'
+			},
+			isScrollable: {
+				type: 'boolean',
+				default: false
+			},
+			hasStickyHeader: {
+				type: 'boolean',
+				default: false
+			},
+			headers: {
+				type: 'array',
+				default: [
+					{ content: 'Header 1', scope: 'col' },
+					{ content: 'Header 2', scope: 'col' },
+					{ content: 'Header 3', scope: 'col' }
+				]
+			},
+			rows: {
+				type: 'array',
+				default: [
+					{
+						cells: [
+							{ content: 'Cell 1', isHeader: false },
+							{ content: 'Cell 2', isHeader: false },
+							{ content: 'Cell 3', isHeader: false }
+						]
+					},
+					{
+						cells: [
+							{ content: 'Cell 4', isHeader: false },
+							{ content: 'Cell 5', isHeader: false },
+							{ content: 'Cell 6', isHeader: false }
+						]
+					}
+				]
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes } = props;
+			const { caption, variant, isScrollable, hasStickyHeader, headers, rows } = attributes;
+
+			const blockProps = useBlockProps({
+				className: `uswds-table-editor`
+			});
+
+			const tableVariants = [
+				{ label: __('Default', 'wp-uswds'), value: 'default' },
+				{ label: __('Striped', 'wp-uswds'), value: 'striped' },
+				{ label: __('Borderless', 'wp-uswds'), value: 'borderless' },
+				{ label: __('Stacked', 'wp-uswds'), value: 'stacked' },
+				{ label: __('Stacked Header', 'wp-uswds'), value: 'stacked-header' }
+			];
+
+			function updateHeader(index, content) {
+				const newHeaders = [...headers];
+				newHeaders[index].content = content;
+				setAttributes({ headers: newHeaders });
+			}
+
+			function updateCell(rowIndex, cellIndex, content) {
+				const newRows = [...rows];
+				newRows[rowIndex].cells[cellIndex].content = content;
+				setAttributes({ rows: newRows });
+			}
+
+			function addColumn() {
+				const newHeaders = [...headers];
+				newHeaders.push({ content: `Header ${headers.length + 1}`, scope: 'col' });
+				
+				const newRows = rows.map(row => ({
+					cells: [...row.cells, { content: '', isHeader: false }]
+				}));
+				
+				setAttributes({ 
+					headers: newHeaders,
+					rows: newRows 
+				});
+			}
+
+			function addRow() {
+				const newRow = {
+					cells: headers.map(() => ({ content: '', isHeader: false }))
+				};
+				setAttributes({ rows: [...rows, newRow] });
+			}
+
+			function removeColumn(index) {
+				if (headers.length <= 1) return;
+				
+				const newHeaders = headers.filter((_, i) => i !== index);
+				const newRows = rows.map(row => ({
+					cells: row.cells.filter((_, i) => i !== index)
+				}));
+				
+				setAttributes({ 
+					headers: newHeaders,
+					rows: newRows 
+				});
+			}
+
+			function removeRow(index) {
+				if (rows.length <= 1) return;
+				setAttributes({ rows: rows.filter((_, i) => i !== index) });
+			}
+
+			const tableClasses = [
+				'usa-table',
+				variant !== 'default' ? `usa-table--${variant}` : '',
+				hasStickyHeader ? 'usa-table--sticky-header' : ''
+			].filter(Boolean).join(' ');
+
+			const tableElement = el('table', { className: tableClasses }, [
+				caption && el('caption', { key: 'caption' }, caption),
+				el('thead', { key: 'thead' }, 
+					el('tr', {},
+						headers.map((header, index) => 
+							el('th', { 
+								key: `header-${index}`,
+								scope: 'col',
+								style: { border: '1px solid #ddd', padding: '8px', background: '#f8f9fa' }
+							}, [
+								el(RichText, {
+									tagName: 'span',
+									value: header.content,
+									onChange: (value) => updateHeader(index, value),
+									placeholder: `Header ${index + 1}`
+								}),
+								headers.length > 1 && el('button', {
+									key: 'remove',
+									onClick: () => removeColumn(index),
+									style: { 
+										marginLeft: '8px', 
+										background: '#dc3545', 
+										color: 'white', 
+										border: 'none', 
+										borderRadius: '3px',
+										cursor: 'pointer',
+										fontSize: '12px',
+										padding: '2px 6px'
+									}
+								}, '×')
+							])
+						)
+					)
+				),
+				el('tbody', { key: 'tbody' },
+					rows.map((row, rowIndex) =>
+						el('tr', { key: `row-${rowIndex}` }, [
+							...row.cells.map((cell, cellIndex) =>
+								el('td', { 
+									key: `cell-${rowIndex}-${cellIndex}`,
+									style: { border: '1px solid #ddd', padding: '8px' }
+								},
+									el(RichText, {
+										tagName: 'span',
+										value: cell.content,
+										onChange: (value) => updateCell(rowIndex, cellIndex, value),
+										placeholder: `Cell ${rowIndex + 1}-${cellIndex + 1}`
+									})
+								)
+							),
+							rows.length > 1 && el('td', {
+								key: 'remove-row',
+								style: { border: '1px solid #ddd', padding: '4px', textAlign: 'center' }
+							},
+								el('button', {
+									onClick: () => removeRow(rowIndex),
+									style: { 
+										background: '#dc3545', 
+										color: 'white', 
+										border: 'none', 
+										borderRadius: '3px',
+										cursor: 'pointer',
+										fontSize: '12px',
+										padding: '2px 6px'
+									}
+								}, 'Remove Row')
+							)
+						])
+					)
+				)
+			]);
+
+			const tableContent = isScrollable ? 
+				el('div', { className: 'usa-table-container--scrollable' }, tableElement) :
+				tableElement;
+
+			return el('div', blockProps, [
+				el(InspectorControls, { key: 'inspector' }, [
+					el(PanelBody, {
+						title: __('Table Settings', 'wp-uswds'),
+						initialOpen: true
+					}, [
+						el(TextControl, {
+							key: 'caption',
+							label: __('Table Caption', 'wp-uswds'),
+							value: caption,
+							onChange: (value) => setAttributes({ caption: value }),
+							help: __('Describe the table content for accessibility', 'wp-uswds')
+						}),
+						el(SelectControl, {
+							key: 'variant',
+							label: __('Table Style', 'wp-uswds'),
+							value: variant,
+							options: tableVariants,
+							onChange: (value) => setAttributes({ variant: value })
+						}),
+						el(ToggleControl, {
+							key: 'scrollable',
+							label: __('Scrollable Table', 'wp-uswds'),
+							checked: isScrollable,
+							onChange: (value) => setAttributes({ isScrollable: value }),
+							help: __('Wrap table in scrollable container for wide tables', 'wp-uswds')
+						}),
+						el(ToggleControl, {
+							key: 'sticky',
+							label: __('Sticky Header', 'wp-uswds'),
+							checked: hasStickyHeader,
+							onChange: (value) => setAttributes({ hasStickyHeader: value }),
+							help: __('Keep table headers visible while scrolling', 'wp-uswds')
+						})
+					])
+				]),
+				tableContent,
+				el('div', {
+					key: 'controls',
+					style: { marginTop: '10px', textAlign: 'center' }
+				}, [
+					el('button', {
+						key: 'add-col',
+						onClick: addColumn,
+						className: 'button button-secondary',
+						style: { marginRight: '10px' }
+					}, __('Add Column', 'wp-uswds')),
+					el('button', {
+						key: 'add-row',
+						onClick: addRow,
+						className: 'button button-secondary'
+					}, __('Add Row', 'wp-uswds'))
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { caption, variant, isScrollable, hasStickyHeader, headers, rows } = attributes;
+
+			const blockProps = useBlockProps.save({
+				className: [
+					'usa-table',
+					variant !== 'default' ? `usa-table--${variant}` : '',
+					hasStickyHeader ? 'usa-table--sticky-header' : ''
+				].filter(Boolean).join(' ')
+			});
+
+			const tableElement = el('table', blockProps, [
+				caption && el('caption', { key: 'caption' }, caption),
+				el('thead', { key: 'thead' }, 
+					el('tr', {},
+						headers.map((header, index) => 
+							el('th', { 
+								key: `header-${index}`,
+								scope: header.scope || 'col'
+							}, header.content)
+						)
+					)
+				),
+				el('tbody', { key: 'tbody' },
+					rows.map((row, rowIndex) =>
+						el('tr', { key: `row-${rowIndex}` },
+							row.cells.map((cell, cellIndex) =>
+								el(cell.isHeader ? 'th' : 'td', { 
+									key: `cell-${rowIndex}-${cellIndex}`,
+									scope: cell.isHeader ? 'row' : undefined
+								}, cell.content)
+							)
+						)
+					)
+				)
+			]);
+
+			return isScrollable ? 
+				el('div', { className: 'usa-table-container--scrollable' }, tableElement) :
+				tableElement;
 		}
 	});
 
