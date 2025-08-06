@@ -1485,4 +1485,489 @@
 		}
 	});
 
+	// Register Header Block
+	registerBlockType('wp-uswds/header', {
+		title: __('USWDS Header', 'wp-uswds'),
+		description: __('Government website header with logo, navigation, and search.', 'wp-uswds'),
+		category: 'wp-uswds',
+		icon: 'admin-appearance',
+		attributes: {
+			variant: {
+				type: 'string',
+				default: 'basic'
+			},
+			siteName: {
+				type: 'string',
+				default: 'Site Name'
+			},
+			siteTagline: {
+				type: 'string',
+				default: ''
+			},
+			logoUrl: {
+				type: 'string',
+				default: ''
+			},
+			showSearch: {
+				type: 'boolean',
+				default: false
+			},
+			navItems: {
+				type: 'array',
+				default: [
+					{ label: 'Current page', url: '#', current: true, hasSubmenu: false, submenu: [] },
+					{ 
+						label: 'About', 
+						url: '#about', 
+						current: false,
+						hasSubmenu: true,
+						submenu: [
+							{ label: 'Our Mission', url: '/about/mission' },
+							{ label: 'Leadership', url: '/about/leadership' },
+							{ label: 'History', url: '/about/history' }
+						]
+					},
+					{ label: 'Services', url: '#services', current: false, hasSubmenu: false, submenu: [] },
+					{ label: 'Contact', url: '#contact', current: false, hasSubmenu: false, submenu: [] }
+				]
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes } = props;
+			const { variant, siteName, siteTagline, logoUrl, showSearch, navItems } = attributes;
+
+			const blockProps = useBlockProps({
+				className: `usa-header usa-header--${variant}`
+			});
+
+			const variantOptions = [
+				{ label: __('Basic', 'wp-uswds'), value: 'basic' },
+				{ label: __('Basic with Megamenu', 'wp-uswds'), value: 'basic-megamenu' },
+				{ label: __('Extended', 'wp-uswds'), value: 'extended' },
+				{ label: __('Extended with Megamenu', 'wp-uswds'), value: 'extended-megamenu' }
+			];
+
+			const updateNavItem = function(index, field, value) {
+				const newItems = [...navItems];
+				newItems[index] = { ...newItems[index], [field]: value };
+				setAttributes({ navItems: newItems });
+			};
+
+			const addNavItem = function() {
+				const newItems = [...navItems, { label: 'New Page', url: '#', current: false, hasSubmenu: false, submenu: [] }];
+				setAttributes({ navItems: newItems });
+			};
+
+			const addSubmenuItem = function(parentIndex) {
+				const newItems = [...navItems];
+				newItems[parentIndex].submenu = [...newItems[parentIndex].submenu, { label: 'New Submenu Item', url: '#' }];
+				setAttributes({ navItems: newItems });
+			};
+
+			const updateSubmenuItem = function(parentIndex, submenuIndex, field, value) {
+				const newItems = [...navItems];
+				newItems[parentIndex].submenu[submenuIndex] = { ...newItems[parentIndex].submenu[submenuIndex], [field]: value };
+				setAttributes({ navItems: newItems });
+			};
+
+			const removeSubmenuItem = function(parentIndex, submenuIndex) {
+				const newItems = [...navItems];
+				newItems[parentIndex].submenu = newItems[parentIndex].submenu.filter((_, i) => i !== submenuIndex);
+				setAttributes({ navItems: newItems });
+			};
+
+			const removeNavItem = function(index) {
+				const newItems = navItems.filter((_, i) => i !== index);
+				setAttributes({ navItems: newItems });
+			};
+
+			const isExtended = variant.includes('extended');
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' }, [
+					el(PanelBody, { title: __('Header Settings', 'wp-uswds') }, [
+						el(SelectControl, {
+							key: 'variant',
+							label: __('Header Variant', 'wp-uswds'),
+							value: variant,
+							options: variantOptions,
+							onChange: function(value) { setAttributes({ variant: value }); }
+						}),
+						el(TextControl, {
+							key: 'siteName',
+							label: __('Site Name', 'wp-uswds'),
+							value: siteName,
+							onChange: function(value) { setAttributes({ siteName: value }); }
+						}),
+						isExtended && el(TextControl, {
+							key: 'siteTagline',
+							label: __('Site Tagline', 'wp-uswds'),
+							value: siteTagline,
+							onChange: function(value) { setAttributes({ siteTagline: value }); }
+						}),
+						el(TextControl, {
+							key: 'logoUrl',
+							label: __('Logo URL (optional)', 'wp-uswds'),
+							value: logoUrl,
+							onChange: function(value) { setAttributes({ logoUrl: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'showSearch',
+							label: __('Show search', 'wp-uswds'),
+							checked: showSearch,
+							onChange: function(value) { setAttributes({ showSearch: value }); }
+						})
+					]),
+					el(PanelBody, { title: __('Navigation Items', 'wp-uswds'), initialOpen: false },
+						navItems.map(function(item, index) {
+							return el('div', { key: index, style: { marginBottom: '20px', padding: '12px', border: '1px solid #ddd', borderRadius: '4px' } }, [
+								el(TextControl, {
+									key: 'label',
+									label: __('Label', 'wp-uswds'),
+									value: item.label,
+									onChange: function(value) { updateNavItem(index, 'label', value); }
+								}),
+								el(TextControl, {
+									key: 'url',
+									label: __('URL', 'wp-uswds'),
+									value: item.url,
+									onChange: function(value) { updateNavItem(index, 'url', value); }
+								}),
+								el(ToggleControl, {
+									key: 'current',
+									label: __('Current page', 'wp-uswds'),
+									checked: item.current,
+									onChange: function(value) { updateNavItem(index, 'current', value); }
+								}),
+								el(ToggleControl, {
+									key: 'hasSubmenu',
+									label: __('Has dropdown menu', 'wp-uswds'),
+									checked: item.hasSubmenu,
+									onChange: function(value) { updateNavItem(index, 'hasSubmenu', value); }
+								}),
+								item.hasSubmenu && el('div', {
+									key: 'submenu',
+									style: { marginTop: '12px', padding: '8px', backgroundColor: '#f8f9fa', borderRadius: '4px' }
+								}, [
+									el('strong', { key: 'title', style: { display: 'block', marginBottom: '8px' } }, __('Dropdown Items:', 'wp-uswds')),
+									...item.submenu.map(function(submenuItem, submenuIndex) {
+										return el('div', { 
+											key: `submenu-${submenuIndex}`,
+											style: { marginBottom: '8px', padding: '8px', border: '1px solid #ddd', borderRadius: '3px', backgroundColor: 'white' }
+										}, [
+											el(TextControl, {
+												key: 'sublabel',
+												label: __('Submenu Label', 'wp-uswds'),
+												value: submenuItem.label,
+												onChange: function(value) { updateSubmenuItem(index, submenuIndex, 'label', value); }
+											}),
+											el(TextControl, {
+												key: 'suburl',
+												label: __('Submenu URL', 'wp-uswds'),
+												value: submenuItem.url,
+												onChange: function(value) { updateSubmenuItem(index, submenuIndex, 'url', value); }
+											}),
+											el('button', {
+												key: 'remove-sub',
+												type: 'button',
+												className: 'button button-small button-secondary',
+												onClick: function() { removeSubmenuItem(index, submenuIndex); },
+												style: { marginTop: '4px' }
+											}, __('Remove', 'wp-uswds'))
+										]);
+									}),
+									el('button', {
+										key: 'add-submenu',
+										type: 'button',
+										className: 'button button-small button-primary',
+										onClick: function() { addSubmenuItem(index); },
+										style: { marginTop: '8px' }
+									}, __('Add Submenu Item', 'wp-uswds'))
+								]),
+								el('button', {
+									key: 'remove',
+									type: 'button',
+									className: 'button button-secondary',
+									onClick: function() { removeNavItem(index); },
+									style: { marginTop: '12px' }
+								}, __('Remove Menu Item', 'wp-uswds'))
+							]);
+						}).concat([
+							el('button', {
+								key: 'add',
+								type: 'button',
+								className: 'button button-primary',
+								onClick: addNavItem,
+								style: { marginTop: '12px' }
+							}, __('Add Navigation Item', 'wp-uswds'))
+						])
+					)
+				]),
+				el('header', blockProps, [
+					el('div', { key: 'container', className: 'usa-nav-container' }, [
+						el('div', { key: 'navbar', className: 'usa-navbar' }, [
+							el('div', { key: 'logo', className: 'usa-logo', id: isExtended ? 'extended-logo' : 'basic-logo' }, [
+								logoUrl && el('img', {
+									key: 'logo-img',
+									className: 'usa-logo__img',
+									src: logoUrl,
+									alt: siteName
+								}),
+								el('em', { key: 'logo-text', className: 'usa-logo__text' },
+									el('a', { 
+										href: '/',
+										title: siteName
+									}, siteName)
+								)
+							]),
+							el('button', {
+								key: 'menu-btn',
+								type: 'button',
+								className: 'usa-menu-btn'
+							}, __('Menu', 'wp-uswds'))
+						]),
+						isExtended && siteTagline && el('div', {
+							key: 'tagline',
+							className: 'usa-logo__tagline'
+						}, siteTagline),
+						el('nav', { 
+							key: 'nav',
+							'aria-label': __('Primary navigation', 'wp-uswds'),
+							className: 'usa-nav'
+						}, [
+							el('button', {
+								key: 'close',
+								type: 'button',
+								className: 'usa-nav__close'
+							}, [
+								el('img', {
+									src: '/wp-content/themes/uswds-theme/assets/images/usa-icons/close.svg',
+									role: 'img',
+									alt: __('Close', 'wp-uswds')
+								})
+							]),
+							el('ul', { 
+								key: 'primary',
+								className: 'usa-nav__primary usa-accordion'
+							},
+								navItems.map(function(item, index) {
+									if (item.hasSubmenu && item.submenu && item.submenu.length > 0) {
+										return el('li', { 
+											key: index,
+											className: `usa-nav__primary-item${item.current ? ' usa-current' : ''}`
+										}, [
+											el('button', {
+												key: 'button',
+												type: 'button',
+												className: 'usa-accordion__button usa-nav__link',
+												'aria-expanded': 'false',
+												'aria-controls': `nav-${index}`
+											}, [
+												el('span', { key: 'text' }, item.label)
+											]),
+											el('ul', {
+												key: 'submenu',
+												id: `nav-${index}`,
+												className: 'usa-nav__submenu',
+												hidden: true
+											},
+												item.submenu.map(function(subitem, subindex) {
+													return el('li', {
+														key: subindex,
+														className: 'usa-nav__submenu-item'
+													},
+														el('a', {
+															className: 'usa-nav__submenu-link',
+															href: subitem.url
+														}, subitem.label)
+													);
+												})
+											)
+										]);
+									} else {
+										return el('li', { 
+											key: index,
+											className: `usa-nav__primary-item${item.current ? ' usa-current' : ''}`
+										},
+											el('a', {
+												className: 'usa-nav__link',
+												href: item.url
+											}, item.label)
+										);
+									}
+								})
+							),
+							showSearch && el('div', {
+								key: 'search',
+								className: 'usa-nav__secondary'
+							},
+								el('form', { className: 'usa-search usa-search--small' },
+									el('div', { role: 'search' }, [
+										el('label', {
+											key: 'label',
+											className: 'usa-sr-only',
+											htmlFor: 'search-field'
+										}, __('Search', 'wp-uswds')),
+										el('input', {
+											key: 'input',
+											className: 'usa-input',
+											id: 'search-field',
+											type: 'search',
+											name: 'search',
+											placeholder: __('Search', 'wp-uswds')
+										}),
+										el('button', {
+											key: 'submit',
+											className: 'usa-button',
+											type: 'submit'
+										}, __('Search', 'wp-uswds'))
+									])
+								)
+							)
+						])
+					])
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { variant, siteName, siteTagline, logoUrl, showSearch, navItems } = attributes;
+
+			const isExtended = variant.includes('extended');
+
+			return el('header', {
+				className: `usa-header usa-header--${variant}`
+			},
+				el('div', { className: 'usa-nav-container' }, [
+					el('div', { key: 'navbar', className: 'usa-navbar' }, [
+						el('div', { key: 'logo', className: 'usa-logo', id: isExtended ? 'extended-logo' : 'basic-logo' }, [
+							logoUrl && el('img', {
+								key: 'logo-img',
+								className: 'usa-logo__img',
+								src: logoUrl,
+								alt: siteName
+							}),
+							el('em', { key: 'logo-text', className: 'usa-logo__text' },
+								el('a', { 
+									href: '/',
+									title: siteName,
+									dangerouslySetInnerHTML: { __html: siteName }
+								})
+							)
+						]),
+						el('button', {
+							key: 'menu-btn',
+							type: 'button',
+							className: 'usa-menu-btn'
+						}, 'Menu')
+					]),
+					isExtended && siteTagline && el('div', {
+						key: 'tagline',
+						className: 'usa-logo__tagline'
+					}, siteTagline),
+					el('nav', { 
+						key: 'nav',
+						'aria-label': 'Primary navigation',
+						className: 'usa-nav'
+					}, [
+						el('button', {
+							key: 'close',
+							type: 'button',
+							className: 'usa-nav__close'
+						}, [
+							el('img', {
+								src: '/wp-content/themes/uswds-theme/assets/images/usa-icons/close.svg',
+								role: 'img',
+								alt: 'Close'
+							})
+						]),
+						el('ul', { 
+							key: 'primary',
+							className: 'usa-nav__primary usa-accordion'
+						},
+							navItems.map(function(item, index) {
+								if (item.hasSubmenu && item.submenu && item.submenu.length > 0) {
+									return el('li', { 
+										key: index,
+										className: `usa-nav__primary-item${item.current ? ' usa-current' : ''}`
+									}, [
+										el('button', {
+											key: 'button',
+											type: 'button',
+											className: 'usa-accordion__button usa-nav__link',
+											'aria-expanded': 'false',
+											'aria-controls': `nav-${index}`
+										}, [
+											el('span', { 
+												key: 'text',
+												dangerouslySetInnerHTML: { __html: item.label }
+											})
+										]),
+										el('ul', {
+											key: 'submenu',
+											id: `nav-${index}`,
+											className: 'usa-nav__submenu',
+											hidden: true
+										},
+											item.submenu.map(function(subitem, subindex) {
+												return el('li', {
+													key: subindex,
+													className: 'usa-nav__submenu-item'
+												},
+													el('a', {
+														className: 'usa-nav__submenu-link',
+														href: subitem.url,
+														dangerouslySetInnerHTML: { __html: subitem.label }
+													})
+												);
+											})
+										)
+									]);
+								} else {
+									return el('li', { 
+										key: index,
+										className: `usa-nav__primary-item${item.current ? ' usa-current' : ''}`
+									},
+										el('a', {
+											className: 'usa-nav__link',
+											href: item.url,
+											dangerouslySetInnerHTML: { __html: item.label }
+										})
+									);
+								}
+							})
+						),
+						showSearch && el('div', {
+							key: 'search',
+							className: 'usa-nav__secondary'
+						},
+							el('form', { className: 'usa-search usa-search--small' },
+								el('div', { role: 'search' }, [
+									el('label', {
+										key: 'label',
+										className: 'usa-sr-only',
+										htmlFor: 'search-field'
+									}, 'Search'),
+									el('input', {
+										key: 'input',
+										className: 'usa-input',
+										id: 'search-field',
+										type: 'search',
+										name: 'search',
+										placeholder: 'Search'
+									}),
+									el('button', {
+										key: 'submit',
+										className: 'usa-button',
+										type: 'submit'
+									}, 'Search')
+								])
+							)
+						)
+					])
+				])
+			);
+		}
+	});
+
 })();
