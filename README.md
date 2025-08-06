@@ -2,6 +2,8 @@
 
 A comprehensive WordPress solution that converts U.S. Web Design System (USWDS) components into Gutenberg blocks and provides a complete WordPress theme for government websites.
 
+**Repository:** https://github.com/whyisjake/wp-uswds
+
 ## Overview
 
 This project provides two main packages:
@@ -38,7 +40,7 @@ This project provides two main packages:
 
 1. **Clone the repository:**
 ```bash
-git clone <repository-url>
+git clone https://github.com/whyisjake/wp-uswds.git
 cd wp-uswds
 ```
 
@@ -248,6 +250,7 @@ The plugin and theme architecture supports:
 
 ## Support & Documentation
 
+- **GitHub Repository**: [github.com/whyisjake/wp-uswds](https://github.com/whyisjake/wp-uswds)
 - **USWDS Documentation**: [designsystem.digital.gov](https://designsystem.digital.gov/)
 - **WordPress Block Editor**: [WordPress.org/support/article/wordpress-editor](https://wordpress.org/support/article/wordpress-editor/)
 - **Accessibility Guidelines**: [Section508.gov](https://section508.gov/)
