@@ -24,28 +24,9 @@ define( 'WP_USWDS_BLOCKS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_USWDS_BLOCKS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**
- * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
+ * Block registration is now handled by simple-blocks.js
+ * All blocks are registered client-side using wp.blocks.registerBlockType
  */
-function register_blocks() {
-	// Register all blocks in the blocks directory
-	$blocks_dir = WP_USWDS_BLOCKS_PLUGIN_PATH . 'build/blocks/';
-	
-	if ( ! is_dir( $blocks_dir ) ) {
-		return;
-	}
-
-	$block_folders = array_filter( glob( $blocks_dir . '*' ), 'is_dir' );
-
-	foreach ( $block_folders as $block_folder ) {
-		$block_json = $block_folder . '/block.json';
-		if ( file_exists( $block_json ) ) {
-			register_block_type( $block_json );
-		}
-	}
-}
-add_action( 'init', __NAMESPACE__ . '\register_blocks' );
 
 /**
  * Add USWDS block category
@@ -58,6 +39,11 @@ function add_block_categories( $categories ) {
 				'slug'  => 'wp-uswds',
 				'title' => __( 'USWDS Components', 'wp-uswds' ),
 				'icon'  => 'star-filled',
+			),
+			array(
+				'slug'  => 'wp-uswds-forms',
+				'title' => __( 'USWDS Form Components', 'wp-uswds' ),
+				'icon'  => 'feedback',
 			),
 		)
 	);

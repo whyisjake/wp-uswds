@@ -9,8 +9,8 @@
 
 	const { registerBlockType } = wp.blocks;
 	const { __ } = wp.i18n;
-	const { useBlockProps, InspectorControls, RichText } = wp.blockEditor;
-	const { PanelBody, SelectControl, ToggleControl, TextControl } = wp.components;
+	const { useBlockProps, InspectorControls, RichText, InnerBlocks } = wp.blockEditor;
+	const { PanelBody, SelectControl, ToggleControl, TextControl, TextareaControl, RangeControl } = wp.components;
 	const { createElement: el } = wp.element;
 
 	// Register Alert Block
@@ -1967,6 +1967,2022 @@
 					])
 				])
 			);
+		}
+	});
+
+	// Register Text Input Block
+	registerBlockType('wp-uswds/text-input', {
+		title: __('USWDS Text Input', 'wp-uswds'),
+		description: __('A text input field following USWDS form patterns.', 'wp-uswds'),
+		category: 'wp-uswds-forms',
+		icon: 'text',
+		attributes: {
+			label: {
+				type: 'string',
+				default: 'Text input label'
+			},
+			placeholder: {
+				type: 'string',
+				default: ''
+			},
+			isRequired: {
+				type: 'boolean',
+				default: false
+			},
+			isDisabled: {
+				type: 'boolean',
+				default: false
+			},
+			hasError: {
+				type: 'boolean',
+				default: false
+			},
+			errorMessage: {
+				type: 'string',
+				default: 'This field has an error'
+			},
+			helpText: {
+				type: 'string',
+				default: ''
+			},
+			inputType: {
+				type: 'string',
+				default: 'text'
+			},
+			fieldId: {
+				type: 'string',
+				default: ''
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes, clientId } = props;
+			const { label, placeholder, isRequired, isDisabled, hasError, errorMessage, helpText, inputType, fieldId } = attributes;
+
+			// Set a unique ID if one doesn't exist
+			if (!fieldId) {
+				setAttributes({ fieldId: `text-input-${clientId}` });
+			}
+
+			const blockProps = useBlockProps({
+				className: 'usa-form-group'
+			});
+
+			const inputTypeOptions = [
+				{ label: __('Text', 'wp-uswds'), value: 'text' },
+				{ label: __('Email', 'wp-uswds'), value: 'email' },
+				{ label: __('Password', 'wp-uswds'), value: 'password' },
+				{ label: __('Number', 'wp-uswds'), value: 'number' },
+				{ label: __('Tel', 'wp-uswds'), value: 'tel' },
+				{ label: __('URL', 'wp-uswds'), value: 'url' }
+			];
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' },
+					el(PanelBody, { title: __('Text Input Settings', 'wp-uswds') }, [
+						el(SelectControl, {
+							key: 'inputType',
+							label: __('Input Type', 'wp-uswds'),
+							value: inputType,
+							options: inputTypeOptions,
+							onChange: function(value) { setAttributes({ inputType: value }); }
+						}),
+						el(TextControl, {
+							key: 'placeholder',
+							label: __('Placeholder Text', 'wp-uswds'),
+							value: placeholder,
+							onChange: function(value) { setAttributes({ placeholder: value }); }
+						}),
+						el(TextControl, {
+							key: 'helpText',
+							label: __('Help Text', 'wp-uswds'),
+							value: helpText,
+							onChange: function(value) { setAttributes({ helpText: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isRequired',
+							label: __('Required field', 'wp-uswds'),
+							checked: isRequired,
+							onChange: function(value) { setAttributes({ isRequired: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isDisabled',
+							label: __('Disabled', 'wp-uswds'),
+							checked: isDisabled,
+							onChange: function(value) { setAttributes({ isDisabled: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'hasError',
+							label: __('Show error state', 'wp-uswds'),
+							checked: hasError,
+							onChange: function(value) { setAttributes({ hasError: value }); }
+						}),
+						hasError && el(TextControl, {
+							key: 'errorMessage',
+							label: __('Error Message', 'wp-uswds'),
+							value: errorMessage,
+							onChange: function(value) { setAttributes({ errorMessage: value }); }
+						})
+					])
+				),
+				el('div', blockProps, [
+					el('label', {
+						key: 'label',
+						className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+						htmlFor: fieldId || `text-input-${clientId}`
+					}, [
+						el(RichText, {
+							tagName: 'span',
+							value: label,
+							onChange: function(value) { setAttributes({ label: value }); },
+							placeholder: __('Enter field label...', 'wp-uswds')
+						}),
+						isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+					]),
+					helpText && el('div', {
+						key: 'hint',
+						className: 'usa-hint',
+						id: `${fieldId || `text-input-${clientId}`}-hint`
+					}, helpText),
+					hasError && el('div', {
+						key: 'error',
+						className: 'usa-error-message',
+						id: `${fieldId || `text-input-${clientId}`}-error`,
+						role: 'alert'
+					}, errorMessage),
+					el('input', {
+						key: 'input',
+						className: `usa-input${hasError ? ' usa-input--error' : ''}`,
+						id: fieldId || `text-input-${clientId}`,
+						name: fieldId || `text-input-${clientId}`,
+						type: inputType,
+						placeholder: placeholder,
+						disabled: isDisabled,
+						required: isRequired,
+						'aria-describedby': [
+							helpText ? `${fieldId || `text-input-${clientId}`}-hint` : '',
+							hasError ? `${fieldId || `text-input-${clientId}`}-error` : ''
+						].filter(Boolean).join(' ') || undefined
+					})
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { label, placeholder, isRequired, isDisabled, hasError, errorMessage, helpText, inputType, fieldId } = attributes;
+
+			return el('div', {
+				className: 'usa-form-group'
+			}, [
+				el('label', {
+					key: 'label',
+					className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+					htmlFor: fieldId
+				}, [
+					el('span', {
+						key: 'text',
+						dangerouslySetInnerHTML: { __html: label }
+					}),
+					isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+				]),
+				helpText && el('div', {
+					key: 'hint',
+					className: 'usa-hint',
+					id: `${fieldId}-hint`
+				}, helpText),
+				hasError && el('div', {
+					key: 'error',
+					className: 'usa-error-message',
+					id: `${fieldId}-error`,
+					role: 'alert'
+				}, errorMessage),
+				el('input', {
+					key: 'input',
+					className: `usa-input${hasError ? ' usa-input--error' : ''}`,
+					id: fieldId,
+					name: fieldId,
+					type: inputType,
+					placeholder: placeholder,
+					disabled: isDisabled,
+					required: isRequired,
+					'aria-describedby': [
+						helpText ? `${fieldId}-hint` : '',
+						hasError ? `${fieldId}-error` : ''
+					].filter(Boolean).join(' ') || undefined
+				})
+			]);
+		}
+	});
+
+	// Register Textarea Block
+	registerBlockType('wp-uswds/textarea', {
+		title: __('USWDS Textarea', 'wp-uswds'),
+		description: __('A textarea field for longer text input following USWDS patterns.', 'wp-uswds'),
+		category: 'wp-uswds-forms',
+		icon: 'text',
+		attributes: {
+			label: {
+				type: 'string',
+				default: 'Textarea label'
+			},
+			placeholder: {
+				type: 'string',
+				default: ''
+			},
+			rows: {
+				type: 'number',
+				default: 4
+			},
+			isRequired: {
+				type: 'boolean',
+				default: false
+			},
+			isDisabled: {
+				type: 'boolean',
+				default: false
+			},
+			hasError: {
+				type: 'boolean',
+				default: false
+			},
+			errorMessage: {
+				type: 'string',
+				default: 'This field has an error'
+			},
+			helpText: {
+				type: 'string',
+				default: ''
+			},
+			fieldId: {
+				type: 'string',
+				default: ''
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes, clientId } = props;
+			const { label, placeholder, rows, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			// Set a unique ID if one doesn't exist
+			if (!fieldId) {
+				setAttributes({ fieldId: `textarea-${clientId}` });
+			}
+
+			const blockProps = useBlockProps({
+				className: 'usa-form-group'
+			});
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' },
+					el(PanelBody, { title: __('Textarea Settings', 'wp-uswds') }, [
+						el('div', { key: 'rows' }, [
+							el('label', { style: { display: 'block', marginBottom: '8px' } }, __('Rows', 'wp-uswds')),
+							el('input', {
+								type: 'number',
+								min: 2,
+								max: 20,
+								value: rows,
+								onChange: function(e) { setAttributes({ rows: parseInt(e.target.value) || 4 }); },
+								style: { width: '100%' }
+							})
+						]),
+						el(TextControl, {
+							key: 'placeholder',
+							label: __('Placeholder Text', 'wp-uswds'),
+							value: placeholder,
+							onChange: function(value) { setAttributes({ placeholder: value }); }
+						}),
+						el(TextControl, {
+							key: 'helpText',
+							label: __('Help Text', 'wp-uswds'),
+							value: helpText,
+							onChange: function(value) { setAttributes({ helpText: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isRequired',
+							label: __('Required field', 'wp-uswds'),
+							checked: isRequired,
+							onChange: function(value) { setAttributes({ isRequired: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isDisabled',
+							label: __('Disabled', 'wp-uswds'),
+							checked: isDisabled,
+							onChange: function(value) { setAttributes({ isDisabled: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'hasError',
+							label: __('Show error state', 'wp-uswds'),
+							checked: hasError,
+							onChange: function(value) { setAttributes({ hasError: value }); }
+						}),
+						hasError && el(TextControl, {
+							key: 'errorMessage',
+							label: __('Error Message', 'wp-uswds'),
+							value: errorMessage,
+							onChange: function(value) { setAttributes({ errorMessage: value }); }
+						})
+					])
+				),
+				el('div', blockProps, [
+					el('label', {
+						key: 'label',
+						className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+						htmlFor: fieldId || `textarea-${clientId}`
+					}, [
+						el(RichText, {
+							tagName: 'span',
+							value: label,
+							onChange: function(value) { setAttributes({ label: value }); },
+							placeholder: __('Enter field label...', 'wp-uswds')
+						}),
+						isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+					]),
+					helpText && el('div', {
+						key: 'hint',
+						className: 'usa-hint',
+						id: `${fieldId || `textarea-${clientId}`}-hint`
+					}, helpText),
+					hasError && el('div', {
+						key: 'error',
+						className: 'usa-error-message',
+						id: `${fieldId || `textarea-${clientId}`}-error`,
+						role: 'alert'
+					}, errorMessage),
+					el('textarea', {
+						key: 'textarea',
+						className: `usa-textarea${hasError ? ' usa-textarea--error' : ''}`,
+						id: fieldId || `textarea-${clientId}`,
+						name: fieldId || `textarea-${clientId}`,
+						rows: rows,
+						placeholder: placeholder,
+						disabled: isDisabled,
+						required: isRequired,
+						'aria-describedby': [
+							helpText ? `${fieldId || `textarea-${clientId}`}-hint` : '',
+							hasError ? `${fieldId || `textarea-${clientId}`}-error` : ''
+						].filter(Boolean).join(' ') || undefined
+					})
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { label, placeholder, rows, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			return el('div', {
+				className: 'usa-form-group'
+			}, [
+				el('label', {
+					key: 'label',
+					className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+					htmlFor: fieldId
+				}, [
+					el('span', {
+						key: 'text',
+						dangerouslySetInnerHTML: { __html: label }
+					}),
+					isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+				]),
+				helpText && el('div', {
+					key: 'hint',
+					className: 'usa-hint',
+					id: `${fieldId}-hint`
+				}, helpText),
+				hasError && el('div', {
+					key: 'error',
+					className: 'usa-error-message',
+					id: `${fieldId}-error`,
+					role: 'alert'
+				}, errorMessage),
+				el('textarea', {
+					key: 'textarea',
+					className: `usa-textarea${hasError ? ' usa-textarea--error' : ''}`,
+					id: fieldId,
+					name: fieldId,
+					rows: rows,
+					placeholder: placeholder,
+					disabled: isDisabled,
+					required: isRequired,
+					'aria-describedby': [
+						helpText ? `${fieldId}-hint` : '',
+						hasError ? `${fieldId}-error` : ''
+					].filter(Boolean).join(' ') || undefined
+				})
+			]);
+		}
+	});
+
+	// Register Checkbox Block
+	registerBlockType('wp-uswds/checkbox', {
+		title: __('USWDS Checkbox', 'wp-uswds'),
+		description: __('A checkbox input following USWDS form patterns.', 'wp-uswds'),
+		category: 'wp-uswds-forms',
+		icon: 'yes',
+		attributes: {
+			label: {
+				type: 'string',
+				default: 'Checkbox label'
+			},
+			isChecked: {
+				type: 'boolean',
+				default: false
+			},
+			isRequired: {
+				type: 'boolean',
+				default: false
+			},
+			isDisabled: {
+				type: 'boolean',
+				default: false
+			},
+			hasError: {
+				type: 'boolean',
+				default: false
+			},
+			errorMessage: {
+				type: 'string',
+				default: 'This field has an error'
+			},
+			helpText: {
+				type: 'string',
+				default: ''
+			},
+			fieldId: {
+				type: 'string',
+				default: ''
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes, clientId } = props;
+			const { label, isChecked, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			// Set a unique ID if one doesn't exist
+			if (!fieldId) {
+				setAttributes({ fieldId: `checkbox-${clientId}` });
+			}
+
+			const blockProps = useBlockProps({
+				className: 'usa-form-group'
+			});
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' },
+					el(PanelBody, { title: __('Checkbox Settings', 'wp-uswds') }, [
+						el(TextControl, {
+							key: 'helpText',
+							label: __('Help Text', 'wp-uswds'),
+							value: helpText,
+							onChange: function(value) { setAttributes({ helpText: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isChecked',
+							label: __('Default checked', 'wp-uswds'),
+							checked: isChecked,
+							onChange: function(value) { setAttributes({ isChecked: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isRequired',
+							label: __('Required field', 'wp-uswds'),
+							checked: isRequired,
+							onChange: function(value) { setAttributes({ isRequired: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isDisabled',
+							label: __('Disabled', 'wp-uswds'),
+							checked: isDisabled,
+							onChange: function(value) { setAttributes({ isDisabled: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'hasError',
+							label: __('Show error state', 'wp-uswds'),
+							checked: hasError,
+							onChange: function(value) { setAttributes({ hasError: value }); }
+						}),
+						hasError && el(TextControl, {
+							key: 'errorMessage',
+							label: __('Error Message', 'wp-uswds'),
+							value: errorMessage,
+							onChange: function(value) { setAttributes({ errorMessage: value }); }
+						})
+					])
+				),
+				el('div', blockProps, [
+					helpText && el('div', {
+						key: 'hint',
+						className: 'usa-hint',
+						id: `${fieldId || `checkbox-${clientId}`}-hint`
+					}, helpText),
+					hasError && el('div', {
+						key: 'error',
+						className: 'usa-error-message',
+						id: `${fieldId || `checkbox-${clientId}`}-error`,
+						role: 'alert'
+					}, errorMessage),
+					el('div', { key: 'checkbox', className: 'usa-checkbox' }, [
+						el('input', {
+							key: 'input',
+							className: `usa-checkbox__input${hasError ? ' usa-checkbox__input--error' : ''}`,
+							id: fieldId || `checkbox-${clientId}`,
+							name: fieldId || `checkbox-${clientId}`,
+							type: 'checkbox',
+							checked: isChecked,
+							disabled: isDisabled,
+							required: isRequired,
+							'aria-describedby': [
+								helpText ? `${fieldId || `checkbox-${clientId}`}-hint` : '',
+								hasError ? `${fieldId || `checkbox-${clientId}`}-error` : ''
+							].filter(Boolean).join(' ') || undefined,
+							onChange: function(e) { setAttributes({ isChecked: e.target.checked }); }
+						}),
+						el('label', {
+							key: 'label',
+							className: `usa-checkbox__label${isRequired ? ' usa-label--required' : ''}`,
+							htmlFor: fieldId || `checkbox-${clientId}`
+						}, [
+							el(RichText, {
+								tagName: 'span',
+								value: label,
+								onChange: function(value) { setAttributes({ label: value }); },
+								placeholder: __('Enter checkbox label...', 'wp-uswds')
+							}),
+							isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+						])
+					])
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { label, isChecked, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			return el('div', {
+				className: 'usa-form-group'
+			}, [
+				helpText && el('div', {
+					key: 'hint',
+					className: 'usa-hint',
+					id: `${fieldId}-hint`
+				}, helpText),
+				hasError && el('div', {
+					key: 'error',
+					className: 'usa-error-message',
+					id: `${fieldId}-error`,
+					role: 'alert'
+				}, errorMessage),
+				el('div', { key: 'checkbox', className: 'usa-checkbox' }, [
+					el('input', {
+						key: 'input',
+						className: `usa-checkbox__input${hasError ? ' usa-checkbox__input--error' : ''}`,
+						id: fieldId,
+						name: fieldId,
+						type: 'checkbox',
+						defaultChecked: isChecked,
+						disabled: isDisabled,
+						required: isRequired,
+						'aria-describedby': [
+							helpText ? `${fieldId}-hint` : '',
+							hasError ? `${fieldId}-error` : ''
+						].filter(Boolean).join(' ') || undefined
+					}),
+					el('label', {
+						key: 'label',
+						className: `usa-checkbox__label${isRequired ? ' usa-label--required' : ''}`,
+						htmlFor: fieldId
+					}, [
+						el('span', {
+							key: 'text',
+							dangerouslySetInnerHTML: { __html: label }
+						}),
+						isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+					])
+				])
+			]);
+		}
+	});
+
+	// Register Radio Button Block
+	registerBlockType('wp-uswds/radio-buttons', {
+		title: __('USWDS Radio Buttons', 'wp-uswds'),
+		description: __('Radio button group following USWDS form patterns.', 'wp-uswds'),
+		category: 'wp-uswds-forms',
+		icon: 'marker',
+		attributes: {
+			legend: {
+				type: 'string',
+				default: 'Radio button legend'
+			},
+			options: {
+				type: 'array',
+				default: [
+					{ label: 'Option 1', value: 'option1', checked: true },
+					{ label: 'Option 2', value: 'option2', checked: false }
+				]
+			},
+			isRequired: {
+				type: 'boolean',
+				default: false
+			},
+			isDisabled: {
+				type: 'boolean',
+				default: false
+			},
+			hasError: {
+				type: 'boolean',
+				default: false
+			},
+			errorMessage: {
+				type: 'string',
+				default: 'This field has an error'
+			},
+			helpText: {
+				type: 'string',
+				default: ''
+			},
+			fieldId: {
+				type: 'string',
+				default: ''
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes, clientId } = props;
+			const { legend, options, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			// Set a unique ID if one doesn't exist
+			if (!fieldId) {
+				setAttributes({ fieldId: `radio-${clientId}` });
+			}
+
+			const blockProps = useBlockProps({
+				className: 'usa-form-group'
+			});
+
+			const updateOption = function(index, field, value) {
+				const newOptions = [...options];
+				if (field === 'checked' && value) {
+					// Uncheck all other options when one is checked
+					newOptions.forEach((opt, i) => {
+						newOptions[i] = { ...opt, checked: i === index };
+					});
+				} else {
+					newOptions[index] = { ...newOptions[index], [field]: value };
+				}
+				setAttributes({ options: newOptions });
+			};
+
+			const addOption = function() {
+				const newOptions = [...options, { label: 'New Option', value: `option${options.length + 1}`, checked: false }];
+				setAttributes({ options: newOptions });
+			};
+
+			const removeOption = function(index) {
+				const newOptions = options.filter((_, i) => i !== index);
+				setAttributes({ options: newOptions });
+			};
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' }, [
+					el(PanelBody, { title: __('Radio Button Settings', 'wp-uswds') }, [
+						el(TextControl, {
+							key: 'helpText',
+							label: __('Help Text', 'wp-uswds'),
+							value: helpText,
+							onChange: function(value) { setAttributes({ helpText: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isRequired',
+							label: __('Required field', 'wp-uswds'),
+							checked: isRequired,
+							onChange: function(value) { setAttributes({ isRequired: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isDisabled',
+							label: __('Disabled', 'wp-uswds'),
+							checked: isDisabled,
+							onChange: function(value) { setAttributes({ isDisabled: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'hasError',
+							label: __('Show error state', 'wp-uswds'),
+							checked: hasError,
+							onChange: function(value) { setAttributes({ hasError: value }); }
+						}),
+						hasError && el(TextControl, {
+							key: 'errorMessage',
+							label: __('Error Message', 'wp-uswds'),
+							value: errorMessage,
+							onChange: function(value) { setAttributes({ errorMessage: value }); }
+						})
+					]),
+					el(PanelBody, { title: __('Radio Options', 'wp-uswds'), initialOpen: false },
+						options.map(function(option, index) {
+							return el('div', { 
+								key: index, 
+								style: { marginBottom: '16px', padding: '12px', border: '1px solid #ddd', borderRadius: '4px' }
+							}, [
+								el(TextControl, {
+									key: 'label',
+									label: __('Label', 'wp-uswds'),
+									value: option.label,
+									onChange: function(value) { updateOption(index, 'label', value); }
+								}),
+								el(TextControl, {
+									key: 'value',
+									label: __('Value', 'wp-uswds'),
+									value: option.value,
+									onChange: function(value) { updateOption(index, 'value', value); }
+								}),
+								el(ToggleControl, {
+									key: 'checked',
+									label: __('Default selected', 'wp-uswds'),
+									checked: option.checked,
+									onChange: function(value) { updateOption(index, 'checked', value); }
+								}),
+								el('button', {
+									key: 'remove',
+									type: 'button',
+									className: 'button button-secondary',
+									onClick: function() { removeOption(index); },
+									style: { marginTop: '8px' }
+								}, __('Remove Option', 'wp-uswds'))
+							]);
+						}).concat([
+							el('button', {
+								key: 'add',
+								type: 'button',
+								className: 'button button-primary',
+								onClick: addOption,
+								style: { marginTop: '12px' }
+							}, __('Add Option', 'wp-uswds'))
+						])
+					)
+				]),
+				el('fieldset', blockProps, [
+					el('legend', {
+						key: 'legend',
+						className: `usa-legend${isRequired ? ' usa-label--required' : ''}`
+					}, [
+						el(RichText, {
+							tagName: 'span',
+							value: legend,
+							onChange: function(value) { setAttributes({ legend: value }); },
+							placeholder: __('Enter fieldset legend...', 'wp-uswds')
+						}),
+						isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+					]),
+					helpText && el('div', {
+						key: 'hint',
+						className: 'usa-hint',
+						id: `${fieldId || `radio-${clientId}`}-hint`
+					}, helpText),
+					hasError && el('div', {
+						key: 'error',
+						className: 'usa-error-message',
+						id: `${fieldId || `radio-${clientId}`}-error`,
+						role: 'alert'
+					}, errorMessage),
+					options.map(function(option, index) {
+						return el('div', { 
+							key: index, 
+							className: 'usa-radio'
+						}, [
+							el('input', {
+								key: 'input',
+								className: `usa-radio__input${hasError ? ' usa-radio__input--error' : ''}`,
+								id: `${fieldId || `radio-${clientId}`}-${index}`,
+								name: fieldId || `radio-${clientId}`,
+								type: 'radio',
+								value: option.value,
+								checked: option.checked,
+								disabled: isDisabled,
+								required: isRequired,
+								'aria-describedby': [
+									helpText ? `${fieldId || `radio-${clientId}`}-hint` : '',
+									hasError ? `${fieldId || `radio-${clientId}`}-error` : ''
+								].filter(Boolean).join(' ') || undefined,
+								onChange: function() { updateOption(index, 'checked', true); }
+							}),
+							el('label', {
+								key: 'label',
+								className: 'usa-radio__label',
+								htmlFor: `${fieldId || `radio-${clientId}`}-${index}`
+							}, option.label)
+						]);
+					})
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { legend, options, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			return el('fieldset', {
+				className: 'usa-form-group'
+			}, [
+				el('legend', {
+					key: 'legend',
+					className: `usa-legend${isRequired ? ' usa-label--required' : ''}`
+				}, [
+					el('span', {
+						key: 'text',
+						dangerouslySetInnerHTML: { __html: legend }
+					}),
+					isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+				]),
+				helpText && el('div', {
+					key: 'hint',
+					className: 'usa-hint',
+					id: `${fieldId}-hint`
+				}, helpText),
+				hasError && el('div', {
+					key: 'error',
+					className: 'usa-error-message',
+					id: `${fieldId}-error`,
+					role: 'alert'
+				}, errorMessage),
+				options.map(function(option, index) {
+					return el('div', { 
+						key: index, 
+						className: 'usa-radio'
+					}, [
+						el('input', {
+							key: 'input',
+							className: `usa-radio__input${hasError ? ' usa-radio__input--error' : ''}`,
+							id: `${fieldId}-${index}`,
+							name: fieldId,
+							type: 'radio',
+							value: option.value,
+							defaultChecked: option.checked,
+							disabled: isDisabled,
+							required: isRequired,
+							'aria-describedby': [
+								helpText ? `${fieldId}-hint` : '',
+								hasError ? `${fieldId}-error` : ''
+							].filter(Boolean).join(' ') || undefined
+						}),
+						el('label', {
+							key: 'label',
+							className: 'usa-radio__label',
+							htmlFor: `${fieldId}-${index}`
+						}, option.label)
+					]);
+				})
+			]);
+		}
+	});
+
+	// Register Select Block
+	registerBlockType('wp-uswds/select', {
+		title: __('USWDS Select', 'wp-uswds'),
+		description: __('A select dropdown following USWDS form patterns.', 'wp-uswds'),
+		category: 'wp-uswds-forms',
+		icon: 'list-view',
+		attributes: {
+			label: {
+				type: 'string',
+				default: 'Select an option'
+			},
+			options: {
+				type: 'array',
+				default: [
+					{ label: 'Option 1', value: 'option1', selected: false },
+					{ label: 'Option 2', value: 'option2', selected: false },
+					{ label: 'Option 3', value: 'option3', selected: false }
+				]
+			},
+			placeholder: {
+				type: 'string',
+				default: '- Select -'
+			},
+			isRequired: {
+				type: 'boolean',
+				default: false
+			},
+			isDisabled: {
+				type: 'boolean',
+				default: false
+			},
+			hasError: {
+				type: 'boolean',
+				default: false
+			},
+			errorMessage: {
+				type: 'string',
+				default: 'This field has an error'
+			},
+			helpText: {
+				type: 'string',
+				default: ''
+			},
+			fieldId: {
+				type: 'string',
+				default: ''
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes, clientId } = props;
+			const { label, options, placeholder, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			// Set a unique ID if one doesn't exist
+			if (!fieldId) {
+				setAttributes({ fieldId: `select-${clientId}` });
+			}
+
+			const blockProps = useBlockProps({
+				className: 'usa-form-group'
+			});
+
+			const updateOption = function(index, field, value) {
+				const newOptions = [...options];
+				if (field === 'selected' && value) {
+					// Unselect all other options when one is selected
+					newOptions.forEach((opt, i) => {
+						newOptions[i] = { ...opt, selected: i === index };
+					});
+				} else {
+					newOptions[index] = { ...newOptions[index], [field]: value };
+				}
+				setAttributes({ options: newOptions });
+			};
+
+			const addOption = function() {
+				const newOptions = [...options, { label: 'New Option', value: `option${options.length + 1}`, selected: false }];
+				setAttributes({ options: newOptions });
+			};
+
+			const removeOption = function(index) {
+				const newOptions = options.filter((_, i) => i !== index);
+				setAttributes({ options: newOptions });
+			};
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' }, [
+					el(PanelBody, { title: __('Select Settings', 'wp-uswds') }, [
+						el(TextControl, {
+							key: 'placeholder',
+							label: __('Placeholder Text', 'wp-uswds'),
+							value: placeholder,
+							onChange: function(value) { setAttributes({ placeholder: value }); }
+						}),
+						el(TextControl, {
+							key: 'helpText',
+							label: __('Help Text', 'wp-uswds'),
+							value: helpText,
+							onChange: function(value) { setAttributes({ helpText: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isRequired',
+							label: __('Required field', 'wp-uswds'),
+							checked: isRequired,
+							onChange: function(value) { setAttributes({ isRequired: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isDisabled',
+							label: __('Disabled', 'wp-uswds'),
+							checked: isDisabled,
+							onChange: function(value) { setAttributes({ isDisabled: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'hasError',
+							label: __('Show error state', 'wp-uswds'),
+							checked: hasError,
+							onChange: function(value) { setAttributes({ hasError: value }); }
+						}),
+						hasError && el(TextControl, {
+							key: 'errorMessage',
+							label: __('Error Message', 'wp-uswds'),
+							value: errorMessage,
+							onChange: function(value) { setAttributes({ errorMessage: value }); }
+						})
+					]),
+					el(PanelBody, { title: __('Select Options', 'wp-uswds'), initialOpen: false },
+						options.map(function(option, index) {
+							return el('div', { 
+								key: index, 
+								style: { marginBottom: '16px', padding: '12px', border: '1px solid #ddd', borderRadius: '4px' }
+							}, [
+								el(TextControl, {
+									key: 'label',
+									label: __('Label', 'wp-uswds'),
+									value: option.label,
+									onChange: function(value) { updateOption(index, 'label', value); }
+								}),
+								el(TextControl, {
+									key: 'value',
+									label: __('Value', 'wp-uswds'),
+									value: option.value,
+									onChange: function(value) { updateOption(index, 'value', value); }
+								}),
+								el(ToggleControl, {
+									key: 'selected',
+									label: __('Default selected', 'wp-uswds'),
+									checked: option.selected,
+									onChange: function(value) { updateOption(index, 'selected', value); }
+								}),
+								el('button', {
+									key: 'remove',
+									type: 'button',
+									className: 'button button-secondary',
+									onClick: function() { removeOption(index); },
+									style: { marginTop: '8px' }
+								}, __('Remove Option', 'wp-uswds'))
+							]);
+						}).concat([
+							el('button', {
+								key: 'add',
+								type: 'button',
+								className: 'button button-primary',
+								onClick: addOption,
+								style: { marginTop: '12px' }
+							}, __('Add Option', 'wp-uswds'))
+						])
+					)
+				]),
+				el('div', blockProps, [
+					el('label', {
+						key: 'label',
+						className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+						htmlFor: fieldId || `select-${clientId}`
+					}, [
+						el(RichText, {
+							tagName: 'span',
+							value: label,
+							onChange: function(value) { setAttributes({ label: value }); },
+							placeholder: __('Enter field label...', 'wp-uswds')
+						}),
+						isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+					]),
+					helpText && el('div', {
+						key: 'hint',
+						className: 'usa-hint',
+						id: `${fieldId || `select-${clientId}`}-hint`
+					}, helpText),
+					hasError && el('div', {
+						key: 'error',
+						className: 'usa-error-message',
+						id: `${fieldId || `select-${clientId}`}-error`,
+						role: 'alert'
+					}, errorMessage),
+					el('select', {
+						key: 'select',
+						className: `usa-select${hasError ? ' usa-select--error' : ''}`,
+						id: fieldId || `select-${clientId}`,
+						name: fieldId || `select-${clientId}`,
+						disabled: isDisabled,
+						required: isRequired,
+						'aria-describedby': [
+							helpText ? `${fieldId || `select-${clientId}`}-hint` : '',
+							hasError ? `${fieldId || `select-${clientId}`}-error` : ''
+						].filter(Boolean).join(' ') || undefined
+					}, [
+						placeholder && el('option', { key: 'placeholder', value: '' }, placeholder)
+					].concat(
+						options.map(function(option, index) {
+							return el('option', {
+								key: index,
+								value: option.value,
+								selected: option.selected
+							}, option.label);
+						})
+					))
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { label, options, placeholder, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			return el('div', {
+				className: 'usa-form-group'
+			}, [
+				el('label', {
+					key: 'label',
+					className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+					htmlFor: fieldId
+				}, [
+					el('span', {
+						key: 'text',
+						dangerouslySetInnerHTML: { __html: label }
+					}),
+					isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+				]),
+				helpText && el('div', {
+					key: 'hint',
+					className: 'usa-hint',
+					id: `${fieldId}-hint`
+				}, helpText),
+				hasError && el('div', {
+					key: 'error',
+					className: 'usa-error-message',
+					id: `${fieldId}-error`,
+					role: 'alert'
+				}, errorMessage),
+				el('select', {
+					key: 'select',
+					className: `usa-select${hasError ? ' usa-select--error' : ''}`,
+					id: fieldId,
+					name: fieldId,
+					disabled: isDisabled,
+					required: isRequired,
+					'aria-describedby': [
+						helpText ? `${fieldId}-hint` : '',
+						hasError ? `${fieldId}-error` : ''
+					].filter(Boolean).join(' ') || undefined
+				}, [
+					placeholder && el('option', { key: 'placeholder', value: '' }, placeholder)
+				].concat(
+					options.map(function(option, index) {
+						return el('option', {
+							key: index,
+							value: option.value,
+							defaultSelected: option.selected
+						}, option.label);
+					})
+				))
+			]);
+		}
+	});
+
+	// Register File Input Block
+	registerBlockType('wp-uswds/file-input', {
+		title: __('USWDS File Input', 'wp-uswds'),
+		description: __('A file input field following USWDS form patterns.', 'wp-uswds'),
+		category: 'wp-uswds-forms',
+		icon: 'upload',
+		attributes: {
+			label: {
+				type: 'string',
+				default: 'Upload file'
+			},
+			acceptedTypes: {
+				type: 'string',
+				default: ''
+			},
+			multiple: {
+				type: 'boolean',
+				default: false
+			},
+			isRequired: {
+				type: 'boolean',
+				default: false
+			},
+			isDisabled: {
+				type: 'boolean',
+				default: false
+			},
+			hasError: {
+				type: 'boolean',
+				default: false
+			},
+			errorMessage: {
+				type: 'string',
+				default: 'This field has an error'
+			},
+			helpText: {
+				type: 'string',
+				default: ''
+			},
+			fieldId: {
+				type: 'string',
+				default: ''
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes, clientId } = props;
+			const { label, acceptedTypes, multiple, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			// Set a unique ID if one doesn't exist
+			if (!fieldId) {
+				setAttributes({ fieldId: `file-input-${clientId}` });
+			}
+
+			const blockProps = useBlockProps({
+				className: 'usa-form-group'
+			});
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' },
+					el(PanelBody, { title: __('File Input Settings', 'wp-uswds') }, [
+						el(TextControl, {
+							key: 'acceptedTypes',
+							label: __('Accepted File Types', 'wp-uswds'),
+							value: acceptedTypes,
+							help: __('e.g., .pdf,.doc,.docx or image/*', 'wp-uswds'),
+							onChange: function(value) { setAttributes({ acceptedTypes: value }); }
+						}),
+						el(TextControl, {
+							key: 'helpText',
+							label: __('Help Text', 'wp-uswds'),
+							value: helpText,
+							onChange: function(value) { setAttributes({ helpText: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'multiple',
+							label: __('Allow multiple files', 'wp-uswds'),
+							checked: multiple,
+							onChange: function(value) { setAttributes({ multiple: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isRequired',
+							label: __('Required field', 'wp-uswds'),
+							checked: isRequired,
+							onChange: function(value) { setAttributes({ isRequired: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isDisabled',
+							label: __('Disabled', 'wp-uswds'),
+							checked: isDisabled,
+							onChange: function(value) { setAttributes({ isDisabled: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'hasError',
+							label: __('Show error state', 'wp-uswds'),
+							checked: hasError,
+							onChange: function(value) { setAttributes({ hasError: value }); }
+						}),
+						hasError && el(TextControl, {
+							key: 'errorMessage',
+							label: __('Error Message', 'wp-uswds'),
+							value: errorMessage,
+							onChange: function(value) { setAttributes({ errorMessage: value }); }
+						})
+					])
+				),
+				el('div', blockProps, [
+					el('label', {
+						key: 'label',
+						className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+						htmlFor: fieldId || `file-input-${clientId}`
+					}, [
+						el(RichText, {
+							tagName: 'span',
+							value: label,
+							onChange: function(value) { setAttributes({ label: value }); },
+							placeholder: __('Enter field label...', 'wp-uswds')
+						}),
+						isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+					]),
+					helpText && el('div', {
+						key: 'hint',
+						className: 'usa-hint',
+						id: `${fieldId || `file-input-${clientId}`}-hint`
+					}, helpText),
+					hasError && el('div', {
+						key: 'error',
+						className: 'usa-error-message',
+						id: `${fieldId || `file-input-${clientId}`}-error`,
+						role: 'alert'
+					}, errorMessage),
+					el('input', {
+						key: 'input',
+						className: `usa-file-input${hasError ? ' usa-file-input--error' : ''}`,
+						id: fieldId || `file-input-${clientId}`,
+						name: fieldId || `file-input-${clientId}`,
+						type: 'file',
+						accept: acceptedTypes || undefined,
+						multiple: multiple,
+						disabled: isDisabled,
+						required: isRequired,
+						'aria-describedby': [
+							helpText ? `${fieldId || `file-input-${clientId}`}-hint` : '',
+							hasError ? `${fieldId || `file-input-${clientId}`}-error` : ''
+						].filter(Boolean).join(' ') || undefined
+					})
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { label, acceptedTypes, multiple, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			return el('div', {
+				className: 'usa-form-group'
+			}, [
+				el('label', {
+					key: 'label',
+					className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+					htmlFor: fieldId
+				}, [
+					el('span', {
+						key: 'text',
+						dangerouslySetInnerHTML: { __html: label }
+					}),
+					isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+				]),
+				helpText && el('div', {
+					key: 'hint',
+					className: 'usa-hint',
+					id: `${fieldId}-hint`
+				}, helpText),
+				hasError && el('div', {
+					key: 'error',
+					className: 'usa-error-message',
+					id: `${fieldId}-error`,
+					role: 'alert'
+				}, errorMessage),
+				el('input', {
+					key: 'input',
+					className: `usa-file-input${hasError ? ' usa-file-input--error' : ''}`,
+					id: fieldId,
+					name: fieldId,
+					type: 'file',
+					accept: acceptedTypes || undefined,
+					multiple: multiple,
+					disabled: isDisabled,
+					required: isRequired,
+					'aria-describedby': [
+						helpText ? `${fieldId}-hint` : '',
+						hasError ? `${fieldId}-error` : ''
+					].filter(Boolean).join(' ') || undefined
+				})
+			]);
+		}
+	});
+
+	// Register Form Block
+	registerBlockType('wp-uswds/form', {
+		title: __('USWDS Form', 'wp-uswds'),
+		description: __('A form container following USWDS form patterns.', 'wp-uswds'),
+		category: 'wp-uswds-forms',
+		icon: 'feedback',
+		attributes: {
+			formTitle: {
+				type: 'string',
+				default: ''
+			},
+			formDescription: {
+				type: 'string',
+				default: ''
+			},
+			submitText: {
+				type: 'string',
+				default: 'Submit'
+			},
+			method: {
+				type: 'string',
+				default: 'post'
+			},
+			action: {
+				type: 'string',
+				default: ''
+			},
+			showTitle: {
+				type: 'boolean',
+				default: false
+			},
+			showDescription: {
+				type: 'boolean',
+				default: false
+			},
+			formId: {
+				type: 'string',
+				default: ''
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes, clientId } = props;
+			const { formTitle, formDescription, submitText, method, action, showTitle, showDescription, formId } = attributes;
+
+			// Set a unique ID if one doesn't exist
+			if (!formId) {
+				setAttributes({ formId: `form-${clientId}` });
+			}
+
+			const blockProps = useBlockProps({
+				className: 'usa-form'
+			});
+
+			const ALLOWED_BLOCKS = [
+				'wp-uswds/text-input',
+				'wp-uswds/textarea',
+				'wp-uswds/checkbox',
+				'wp-uswds/radio-buttons',
+				'wp-uswds/select',
+				'wp-uswds/file-input',
+				'core/paragraph',
+				'core/heading',
+				'core/spacer'
+			];
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' },
+					el(PanelBody, { title: __('Form Settings', 'wp-uswds') }, [
+						el(ToggleControl, {
+							key: 'showTitle',
+							label: __('Show form title', 'wp-uswds'),
+							checked: showTitle,
+							onChange: function(value) { setAttributes({ showTitle: value }); }
+						}),
+						showTitle && el(TextControl, {
+							key: 'formTitle',
+							label: __('Form Title', 'wp-uswds'),
+							value: formTitle,
+							onChange: function(value) { setAttributes({ formTitle: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'showDescription',
+							label: __('Show form description', 'wp-uswds'),
+							checked: showDescription,
+							onChange: function(value) { setAttributes({ showDescription: value }); }
+						}),
+						showDescription && el(TextareaControl, {
+							key: 'formDescription',
+							label: __('Form Description', 'wp-uswds'),
+							value: formDescription,
+							onChange: function(value) { setAttributes({ formDescription: value }); }
+						}),
+						el(TextControl, {
+							key: 'submitText',
+							label: __('Submit Button Text', 'wp-uswds'),
+							value: submitText,
+							onChange: function(value) { setAttributes({ submitText: value }); }
+						}),
+						el(SelectControl, {
+							key: 'method',
+							label: __('Form Method', 'wp-uswds'),
+							value: method,
+							options: [
+								{ label: __('POST', 'wp-uswds'), value: 'post' },
+								{ label: __('GET', 'wp-uswds'), value: 'get' }
+							],
+							onChange: function(value) { setAttributes({ method: value }); }
+						}),
+						el(TextControl, {
+							key: 'action',
+							label: __('Form Action URL', 'wp-uswds'),
+							value: action,
+							help: __('Leave empty to submit to current page', 'wp-uswds'),
+							onChange: function(value) { setAttributes({ action: value }); }
+						})
+					])
+				),
+				el('div', blockProps, [
+					showTitle && formTitle && el('h2', {
+						key: 'title',
+						className: 'usa-form__title'
+					}, formTitle),
+					showDescription && formDescription && el('p', {
+						key: 'description',
+						className: 'usa-form__description'
+					}, formDescription),
+					el(InnerBlocks, {
+						key: 'content',
+						allowedBlocks: ALLOWED_BLOCKS,
+						template: [
+							['wp-uswds/text-input', { label: 'Full Name', isRequired: true }],
+							['wp-uswds/text-input', { label: 'Email Address', inputType: 'email', isRequired: true }],
+							['wp-uswds/textarea', { label: 'Message', isRequired: true }]
+						],
+						templateLock: false
+					}),
+					el('button', {
+						key: 'submit',
+						type: 'submit',
+						className: 'usa-button'
+					}, submitText)
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { formTitle, formDescription, submitText, method, action, showTitle, showDescription, formId } = attributes;
+
+			return el('form', {
+				className: 'usa-form',
+				id: formId,
+				method: method,
+				action: action || undefined
+			}, [
+				showTitle && formTitle && el('h2', {
+					key: 'title',
+					className: 'usa-form__title'
+				}, formTitle),
+				showDescription && formDescription && el('p', {
+					key: 'description',
+					className: 'usa-form__description'
+				}, formDescription),
+				el(InnerBlocks.Content, { key: 'content' }),
+				el('button', {
+					key: 'submit',
+					type: 'submit',
+					className: 'usa-button'
+				}, submitText)
+			]);
+		}
+	});
+
+	// Register Date Picker Block
+	registerBlockType('wp-uswds/date-picker', {
+		title: __('USWDS Date Picker', 'wp-uswds'),
+		description: __('A date picker with calendar widget following USWDS form patterns.', 'wp-uswds'),
+		category: 'wp-uswds-forms',
+		icon: 'calendar-alt',
+		attributes: {
+			label: {
+				type: 'string',
+				default: 'Date'
+			},
+			minDate: {
+				type: 'string',
+				default: ''
+			},
+			maxDate: {
+				type: 'string',
+				default: ''
+			},
+			defaultDate: {
+				type: 'string',
+				default: ''
+			},
+			isRequired: {
+				type: 'boolean',
+				default: false
+			},
+			isDisabled: {
+				type: 'boolean',
+				default: false
+			},
+			hasError: {
+				type: 'boolean',
+				default: false
+			},
+			errorMessage: {
+				type: 'string',
+				default: 'Please enter a valid date'
+			},
+			helpText: {
+				type: 'string',
+				default: ''
+			},
+			dateFormat: {
+				type: 'string',
+				default: 'mm/dd/yyyy'
+			},
+			fieldId: {
+				type: 'string',
+				default: ''
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes, clientId } = props;
+			const { label, minDate, maxDate, defaultDate, isRequired, isDisabled, hasError, errorMessage, helpText, dateFormat, fieldId } = attributes;
+
+			// Set a unique ID if one doesn't exist
+			if (!fieldId) {
+				setAttributes({ fieldId: `date-picker-${clientId}` });
+			}
+
+			const blockProps = useBlockProps({
+				className: 'usa-form-group'
+			});
+
+			const dateFormatOptions = [
+				{ label: __('MM/DD/YYYY', 'wp-uswds'), value: 'mm/dd/yyyy' },
+				{ label: __('DD/MM/YYYY', 'wp-uswds'), value: 'dd/mm/yyyy' },
+				{ label: __('YYYY-MM-DD', 'wp-uswds'), value: 'yyyy-mm-dd' }
+			];
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' },
+					el(PanelBody, { title: __('Date Picker Settings', 'wp-uswds') }, [
+						el(SelectControl, {
+							key: 'dateFormat',
+							label: __('Date Format', 'wp-uswds'),
+							value: dateFormat,
+							options: dateFormatOptions,
+							onChange: function(value) { setAttributes({ dateFormat: value }); }
+						}),
+						el(TextControl, {
+							key: 'defaultDate',
+							label: __('Default Date', 'wp-uswds'),
+							value: defaultDate,
+							help: __('Leave empty for no default date', 'wp-uswds'),
+							onChange: function(value) { setAttributes({ defaultDate: value }); }
+						}),
+						el(TextControl, {
+							key: 'minDate',
+							label: __('Minimum Date', 'wp-uswds'),
+							value: minDate,
+							help: __('Format: YYYY-MM-DD (e.g., 2024-01-01)', 'wp-uswds'),
+							onChange: function(value) { setAttributes({ minDate: value }); }
+						}),
+						el(TextControl, {
+							key: 'maxDate',
+							label: __('Maximum Date', 'wp-uswds'),
+							value: maxDate,
+							help: __('Format: YYYY-MM-DD (e.g., 2025-12-31)', 'wp-uswds'),
+							onChange: function(value) { setAttributes({ maxDate: value }); }
+						}),
+						el(TextControl, {
+							key: 'helpText',
+							label: __('Help Text', 'wp-uswds'),
+							value: helpText,
+							onChange: function(value) { setAttributes({ helpText: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isRequired',
+							label: __('Required field', 'wp-uswds'),
+							checked: isRequired,
+							onChange: function(value) { setAttributes({ isRequired: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isDisabled',
+							label: __('Disabled', 'wp-uswds'),
+							checked: isDisabled,
+							onChange: function(value) { setAttributes({ isDisabled: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'hasError',
+							label: __('Show error state', 'wp-uswds'),
+							checked: hasError,
+							onChange: function(value) { setAttributes({ hasError: value }); }
+						}),
+						hasError && el(TextControl, {
+							key: 'errorMessage',
+							label: __('Error Message', 'wp-uswds'),
+							value: errorMessage,
+							onChange: function(value) { setAttributes({ errorMessage: value }); }
+						})
+					])
+				),
+				el('div', blockProps, [
+					el('label', {
+						key: 'label',
+						className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+						htmlFor: fieldId || `date-picker-${clientId}`
+					}, [
+						el(RichText, {
+							tagName: 'span',
+							value: label,
+							onChange: function(value) { setAttributes({ label: value }); },
+							placeholder: __('Enter field label...', 'wp-uswds')
+						}),
+						isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+					]),
+					el('div', {
+						key: 'hint',
+						className: 'usa-hint',
+						id: `${fieldId || `date-picker-${clientId}`}-hint`
+					}, helpText || dateFormat),
+					hasError && el('div', {
+						key: 'error',
+						className: 'usa-error-message',
+						id: `${fieldId || `date-picker-${clientId}`}-error`,
+						role: 'alert'
+					}, errorMessage),
+					el('div', {
+						key: 'picker',
+						className: 'usa-date-picker'
+					},
+						el('input', {
+							className: `usa-input${hasError ? ' usa-input--error' : ''}`,
+							id: fieldId || `date-picker-${clientId}`,
+							name: fieldId || `date-picker-${clientId}`,
+							type: 'text',
+							placeholder: dateFormat,
+							defaultValue: defaultDate,
+							disabled: isDisabled,
+							required: isRequired,
+							'aria-describedby': [
+								`${fieldId || `date-picker-${clientId}`}-hint`,
+								hasError ? `${fieldId || `date-picker-${clientId}`}-error` : ''
+							].filter(Boolean).join(' ') || undefined,
+							'data-min-date': minDate || undefined,
+							'data-max-date': maxDate || undefined
+						})
+					)
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { label, minDate, maxDate, defaultDate, isRequired, isDisabled, hasError, errorMessage, helpText, dateFormat, fieldId } = attributes;
+
+			return el('div', {
+				className: 'usa-form-group'
+			}, [
+				el('label', {
+					key: 'label',
+					className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+					htmlFor: fieldId
+				}, [
+					el('span', {
+						key: 'text',
+						dangerouslySetInnerHTML: { __html: label }
+					}),
+					isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+				]),
+				el('div', {
+					key: 'hint',
+					className: 'usa-hint',
+					id: `${fieldId}-hint`
+				}, helpText || dateFormat),
+				hasError && el('div', {
+					key: 'error',
+					className: 'usa-error-message',
+					id: `${fieldId}-error`,
+					role: 'alert'
+				}, errorMessage),
+				el('div', {
+					key: 'picker',
+					className: 'usa-date-picker'
+				},
+					el('input', {
+						className: `usa-input${hasError ? ' usa-input--error' : ''}`,
+						id: fieldId,
+						name: fieldId,
+						type: 'text',
+						placeholder: dateFormat,
+						defaultValue: defaultDate,
+						disabled: isDisabled,
+						required: isRequired,
+						'aria-describedby': [
+							`${fieldId}-hint`,
+							hasError ? `${fieldId}-error` : ''
+						].filter(Boolean).join(' ') || undefined,
+						'data-min-date': minDate || undefined,
+						'data-max-date': maxDate || undefined
+					})
+				)
+			]);
+		}
+	});
+
+	// Register Character Count Block
+	registerBlockType('wp-uswds/character-count', {
+		title: __('USWDS Character Count', 'wp-uswds'),
+		description: __('A text input or textarea with character limit indicator following USWDS patterns.', 'wp-uswds'),
+		category: 'wp-uswds-forms',
+		icon: 'editor-spellcheck',
+		attributes: {
+			label: {
+				type: 'string',
+				default: 'Text with character limit'
+			},
+			inputType: {
+				type: 'string',
+				default: 'input'
+			},
+			maxLength: {
+				type: 'number',
+				default: 500
+			},
+			placeholder: {
+				type: 'string',
+				default: ''
+			},
+			rows: {
+				type: 'number',
+				default: 4
+			},
+			isRequired: {
+				type: 'boolean',
+				default: false
+			},
+			isDisabled: {
+				type: 'boolean',
+				default: false
+			},
+			hasError: {
+				type: 'boolean',
+				default: false
+			},
+			errorMessage: {
+				type: 'string',
+				default: 'This field has an error'
+			},
+			helpText: {
+				type: 'string',
+				default: ''
+			},
+			fieldId: {
+				type: 'string',
+				default: ''
+			}
+		},
+		edit: function(props) {
+			const { attributes, setAttributes, clientId } = props;
+			const { label, inputType, maxLength, placeholder, rows, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			// Set a unique ID if one doesn't exist
+			if (!fieldId) {
+				setAttributes({ fieldId: `character-count-${clientId}` });
+			}
+
+			const blockProps = useBlockProps({
+				className: 'usa-character-count'
+			});
+
+			const inputTypeOptions = [
+				{ label: __('Text Input', 'wp-uswds'), value: 'input' },
+				{ label: __('Textarea', 'wp-uswds'), value: 'textarea' }
+			];
+
+			return el('div', null, [
+				el(InspectorControls, { key: 'inspector' },
+					el(PanelBody, { title: __('Character Count Settings', 'wp-uswds') }, [
+						el(SelectControl, {
+							key: 'inputType',
+							label: __('Input Type', 'wp-uswds'),
+							value: inputType,
+							options: inputTypeOptions,
+							onChange: function(value) { setAttributes({ inputType: value }); }
+						}),
+						el(RangeControl, {
+							key: 'maxLength',
+							label: __('Maximum Characters', 'wp-uswds'),
+							value: maxLength,
+							min: 10,
+							max: 2000,
+							step: 10,
+							onChange: function(value) { setAttributes({ maxLength: value }); }
+						}),
+						inputType === 'textarea' && el(RangeControl, {
+							key: 'rows',
+							label: __('Textarea Rows', 'wp-uswds'),
+							value: rows,
+							min: 2,
+							max: 10,
+							onChange: function(value) { setAttributes({ rows: value }); }
+						}),
+						el(TextControl, {
+							key: 'placeholder',
+							label: __('Placeholder Text', 'wp-uswds'),
+							value: placeholder,
+							onChange: function(value) { setAttributes({ placeholder: value }); }
+						}),
+						el(TextControl, {
+							key: 'helpText',
+							label: __('Help Text', 'wp-uswds'),
+							value: helpText,
+							onChange: function(value) { setAttributes({ helpText: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isRequired',
+							label: __('Required field', 'wp-uswds'),
+							checked: isRequired,
+							onChange: function(value) { setAttributes({ isRequired: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'isDisabled',
+							label: __('Disabled', 'wp-uswds'),
+							checked: isDisabled,
+							onChange: function(value) { setAttributes({ isDisabled: value }); }
+						}),
+						el(ToggleControl, {
+							key: 'hasError',
+							label: __('Show error state', 'wp-uswds'),
+							checked: hasError,
+							onChange: function(value) { setAttributes({ hasError: value }); }
+						}),
+						hasError && el(TextControl, {
+							key: 'errorMessage',
+							label: __('Error Message', 'wp-uswds'),
+							value: errorMessage,
+							onChange: function(value) { setAttributes({ errorMessage: value }); }
+						})
+					])
+				),
+				el('div', blockProps, [
+					el('div', {
+						key: 'form-group',
+						className: 'usa-form-group'
+					}, [
+						el('label', {
+							key: 'label',
+							className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+							htmlFor: fieldId || `character-count-${clientId}`
+						}, [
+							el(RichText, {
+								tagName: 'span',
+								value: label,
+								onChange: function(value) { setAttributes({ label: value }); },
+								placeholder: __('Enter field label...', 'wp-uswds')
+							}),
+							isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+						]),
+						helpText && el('div', {
+							key: 'hint',
+							className: 'usa-hint',
+							id: `${fieldId || `character-count-${clientId}`}-hint`
+						}, helpText),
+						hasError && el('div', {
+							key: 'error',
+							className: 'usa-error-message',
+							id: `${fieldId || `character-count-${clientId}`}-error`,
+							role: 'alert'
+						}, errorMessage),
+						inputType === 'textarea' ? el('textarea', {
+							key: 'textarea',
+							className: `usa-textarea usa-character-count__field${hasError ? ' usa-textarea--error' : ''}`,
+							id: fieldId || `character-count-${clientId}`,
+							name: fieldId || `character-count-${clientId}`,
+							rows: rows,
+							maxLength: maxLength,
+							placeholder: placeholder,
+							disabled: isDisabled,
+							required: isRequired,
+							'aria-describedby': [
+								helpText ? `${fieldId || `character-count-${clientId}`}-hint` : '',
+								hasError ? `${fieldId || `character-count-${clientId}`}-error` : '',
+								`${fieldId || `character-count-${clientId}`}-info`
+							].filter(Boolean).join(' ') || undefined
+						}) : el('input', {
+							key: 'input',
+							className: `usa-input usa-character-count__field${hasError ? ' usa-input--error' : ''}`,
+							id: fieldId || `character-count-${clientId}`,
+							name: fieldId || `character-count-${clientId}`,
+							type: 'text',
+							maxLength: maxLength,
+							placeholder: placeholder,
+							disabled: isDisabled,
+							required: isRequired,
+							'aria-describedby': [
+								helpText ? `${fieldId || `character-count-${clientId}`}-hint` : '',
+								hasError ? `${fieldId || `character-count-${clientId}`}-error` : '',
+								`${fieldId || `character-count-${clientId}`}-info`
+							].filter(Boolean).join(' ') || undefined
+						})
+					]),
+					el('span', {
+						key: 'message',
+						className: 'usa-character-count__message',
+						id: `${fieldId || `character-count-${clientId}`}-info`,
+						'aria-live': 'polite'
+					}, `You can enter up to ${maxLength} characters`)
+				])
+			]);
+		},
+		save: function(props) {
+			const { attributes } = props;
+			const { label, inputType, maxLength, placeholder, rows, isRequired, isDisabled, hasError, errorMessage, helpText, fieldId } = attributes;
+
+			return el('div', {
+				className: 'usa-character-count'
+			}, [
+				el('div', {
+					key: 'form-group',
+					className: 'usa-form-group'
+				}, [
+					el('label', {
+						key: 'label',
+						className: `usa-label${isRequired ? ' usa-label--required' : ''}`,
+						htmlFor: fieldId
+					}, [
+						el('span', {
+							key: 'text',
+							dangerouslySetInnerHTML: { __html: label }
+						}),
+						isRequired && el('span', { key: 'required', className: 'usa-hint usa-hint--required' }, ' *')
+					]),
+					helpText && el('div', {
+						key: 'hint',
+						className: 'usa-hint',
+						id: `${fieldId}-hint`
+					}, helpText),
+					hasError && el('div', {
+						key: 'error',
+						className: 'usa-error-message',
+						id: `${fieldId}-error`,
+						role: 'alert'
+					}, errorMessage),
+					inputType === 'textarea' ? el('textarea', {
+						key: 'textarea',
+						className: `usa-textarea usa-character-count__field${hasError ? ' usa-textarea--error' : ''}`,
+						id: fieldId,
+						name: fieldId,
+						rows: rows,
+						maxLength: maxLength,
+						placeholder: placeholder,
+						disabled: isDisabled,
+						required: isRequired,
+						'aria-describedby': [
+							helpText ? `${fieldId}-hint` : '',
+							hasError ? `${fieldId}-error` : '',
+							`${fieldId}-info`
+						].filter(Boolean).join(' ') || undefined
+					}) : el('input', {
+						key: 'input',
+						className: `usa-input usa-character-count__field${hasError ? ' usa-input--error' : ''}`,
+						id: fieldId,
+						name: fieldId,
+						type: 'text',
+						maxLength: maxLength,
+						placeholder: placeholder,
+						disabled: isDisabled,
+						required: isRequired,
+						'aria-describedby': [
+							helpText ? `${fieldId}-hint` : '',
+							hasError ? `${fieldId}-error` : '',
+							`${fieldId}-info`
+						].filter(Boolean).join(' ') || undefined
+					})
+				]),
+				el('span', {
+					key: 'message',
+					className: 'usa-character-count__message',
+					id: `${fieldId}-info`,
+					'aria-live': 'polite'
+				}, `You can enter up to ${maxLength} characters`)
+			]);
 		}
 	});
 
