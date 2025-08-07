@@ -1,0 +1,690 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "title": "USWDS WordPress Theme",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary-lightest",
+          "color": "#eff6ff",
+          "name": "Primary Lightest"
+        },
+        {
+          "slug": "primary-lighter",
+          "color": "#dbeafe",
+          "name": "Primary Lighter"
+        },
+        {
+          "slug": "primary-light",
+          "color": "#93c5fd",
+          "name": "Primary Light"
+        },
+        {
+          "slug": "primary-default",
+          "color": "#005ea2",
+          "name": "Primary Default"
+        },
+        {
+          "slug": "primary-vivid",
+          "color": "#0050d8",
+          "name": "Primary Vivid"
+        },
+        {
+          "slug": "primary-dark",
+          "color": "#1e40af",
+          "name": "Primary Dark"
+        },
+        {
+          "slug": "primary-darker",
+          "color": "#1e3a8a",
+          "name": "Primary Darker"
+        },
+        {
+          "slug": "primary-darkest",
+          "color": "#1e293b",
+          "name": "Primary Darkest"
+        },
+        {
+          "slug": "secondary-lightest",
+          "color": "#fef2f2",
+          "name": "Secondary Lightest"
+        },
+        {
+          "slug": "secondary-lighter",
+          "color": "#fecaca",
+          "name": "Secondary Lighter"
+        },
+        {
+          "slug": "secondary-light",
+          "color": "#f87171",
+          "name": "Secondary Light"
+        },
+        {
+          "slug": "secondary-default",
+          "color": "#dc2626",
+          "name": "Secondary Default"
+        },
+        {
+          "slug": "secondary-vivid",
+          "color": "#e11d48",
+          "name": "Secondary Vivid"
+        },
+        {
+          "slug": "secondary-dark",
+          "color": "#b91c1c",
+          "name": "Secondary Dark"
+        },
+        {
+          "slug": "secondary-darker",
+          "color": "#991b1b",
+          "name": "Secondary Darker"
+        },
+        {
+          "slug": "secondary-darkest",
+          "color": "#7f1d1d",
+          "name": "Secondary Darkest"
+        },
+        {
+          "slug": "base-lightest",
+          "color": "#f9fafb",
+          "name": "Base Lightest"
+        },
+        {
+          "slug": "base-lighter",
+          "color": "#f3f4f6",
+          "name": "Base Lighter"
+        },
+        {
+          "slug": "base-light",
+          "color": "#d1d5db",
+          "name": "Base Light"
+        },
+        {
+          "slug": "base-default",
+          "color": "#6b7280",
+          "name": "Base Default"
+        },
+        {
+          "slug": "base-dark",
+          "color": "#4b5563",
+          "name": "Base Dark"
+        },
+        {
+          "slug": "base-darker",
+          "color": "#374151",
+          "name": "Base Darker"
+        },
+        {
+          "slug": "base-darkest",
+          "color": "#1f2937",
+          "name": "Base Darkest"
+        },
+        {
+          "slug": "success-lighter",
+          "color": "#dcfce7",
+          "name": "Success Lighter"
+        },
+        {
+          "slug": "success-light",
+          "color": "#bbf7d0",
+          "name": "Success Light"
+        },
+        {
+          "slug": "success-default",
+          "color": "#00a91c",
+          "name": "Success Default"
+        },
+        {
+          "slug": "success-dark",
+          "color": "#166534",
+          "name": "Success Dark"
+        },
+        {
+          "slug": "warning-lighter",
+          "color": "#fef3c7",
+          "name": "Warning Lighter"
+        },
+        {
+          "slug": "warning-light",
+          "color": "#fde68a",
+          "name": "Warning Light"
+        },
+        {
+          "slug": "warning-default",
+          "color": "#ffbe2e",
+          "name": "Warning Default"
+        },
+        {
+          "slug": "warning-dark",
+          "color": "#d97706",
+          "name": "Warning Dark"
+        },
+        {
+          "slug": "error-lighter",
+          "color": "#fecaca",
+          "name": "Error Lighter"
+        },
+        {
+          "slug": "error-light",
+          "color": "#f87171",
+          "name": "Error Light"
+        },
+        {
+          "slug": "error-default",
+          "color": "#b50909",
+          "name": "Error Default"
+        },
+        {
+          "slug": "error-dark",
+          "color": "#dc2626",
+          "name": "Error Dark"
+        },
+        {
+          "slug": "info-lighter",
+          "color": "#dbeafe",
+          "name": "Info Lighter"
+        },
+        {
+          "slug": "info-light",
+          "color": "#93c5fd",
+          "name": "Info Light"
+        },
+        {
+          "slug": "info-default",
+          "color": "#2563eb",
+          "name": "Info Default"
+        },
+        {
+          "slug": "info-dark",
+          "color": "#1d4ed8",
+          "name": "Info Dark"
+        }
+      ],
+      "gradients": [],
+      "custom": true,
+      "customGradient": true,
+      "defaultGradients": false,
+      "defaultPalette": false,
+      "background": true,
+      "text": true,
+      "link": true
+    },
+    "typography": {
+      "customFontSize": true,
+      "fontStyle": true,
+      "fontWeight": true,
+      "letterSpacing": true,
+      "lineHeight": true,
+      "textDecoration": true,
+      "textTransform": true,
+      "dropCap": false,
+      "fontSizes": [
+        {
+          "slug": "micro",
+          "size": "0.625rem",
+          "name": "Micro"
+        },
+        {
+          "slug": "2xs",
+          "size": "0.688rem",
+          "name": "2xs"
+        },
+        {
+          "slug": "xs",
+          "size": "0.75rem",
+          "name": "Xs"
+        },
+        {
+          "slug": "sm",
+          "size": "0.813rem",
+          "name": "Sm"
+        },
+        {
+          "slug": "md",
+          "size": "0.875rem",
+          "name": "Md"
+        },
+        {
+          "slug": "lg",
+          "size": "1rem",
+          "name": "Lg"
+        },
+        {
+          "slug": "xl",
+          "size": "1.125rem",
+          "name": "Xl"
+        },
+        {
+          "slug": "2xl",
+          "size": "1.25rem",
+          "name": "2xl"
+        },
+        {
+          "slug": "3xl",
+          "size": "1.5rem",
+          "name": "3xl"
+        },
+        {
+          "slug": "4xl",
+          "size": "1.875rem",
+          "name": "4xl"
+        },
+        {
+          "slug": "5xl",
+          "size": "2.25rem",
+          "name": "5xl"
+        },
+        {
+          "slug": "6xl",
+          "size": "3rem",
+          "name": "6xl"
+        },
+        {
+          "slug": "7xl",
+          "size": "3.75rem",
+          "name": "7xl"
+        },
+        {
+          "slug": "8xl",
+          "size": "4.5rem",
+          "name": "8xl"
+        },
+        {
+          "slug": "9xl",
+          "size": "6rem",
+          "name": "9xl"
+        }
+      ],
+      "fontFamilies": [
+        {
+          "slug": "source-sans-pro",
+          "fontFamily": "\"Source Sans Pro\", \"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif",
+          "name": "Source sans pro"
+        },
+        {
+          "slug": "public-sans",
+          "fontFamily": "\"Public Sans Web\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+          "name": "Public sans"
+        },
+        {
+          "slug": "system",
+          "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+          "name": "System"
+        },
+        {
+          "slug": "merriweather",
+          "fontFamily": "\"Merriweather Web\", \"Georgia\", \"Cambria\", \"Times New Roman\", \"Times\", serif",
+          "name": "Merriweather"
+        },
+        {
+          "slug": "georgia",
+          "fontFamily": "\"Georgia\", \"Cambria\", \"Times New Roman\", \"Times\", serif",
+          "name": "Georgia"
+        },
+        {
+          "slug": "roboto-mono",
+          "fontFamily": "\"Roboto Mono Web\", \"Roboto Mono Web\", \"Bitstream Vera Sans Mono\", \"Consolas\", \"Courier\", monospace",
+          "name": "Roboto mono"
+        },
+        {
+          "slug": "open-sans",
+          "fontFamily": "\"Open Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+          "name": "Open sans"
+        },
+        {
+          "slug": "helvetica",
+          "fontFamily": "\"Helvetica Neue\", \"Helvetica\", \"Roboto\", \"Arial\", sans-serif",
+          "name": "Helvetica"
+        },
+        {
+          "slug": "tahoma",
+          "fontFamily": "\"Tahoma\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+          "name": "Tahoma"
+        },
+        {
+          "slug": "verdana",
+          "fontFamily": "\"Verdana\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+          "name": "Verdana"
+        }
+      ]
+    },
+    "spacing": {
+      "customSpacingSize": true,
+      "spacingSizes": [
+        {
+          "slug": "1",
+          "size": "0.5rem",
+          "name": "1"
+        },
+        {
+          "slug": "2",
+          "size": "1rem",
+          "name": "2"
+        },
+        {
+          "slug": "3",
+          "size": "1.5rem",
+          "name": "3"
+        },
+        {
+          "slug": "4",
+          "size": "2rem",
+          "name": "4"
+        },
+        {
+          "slug": "5",
+          "size": "2.5rem",
+          "name": "5"
+        },
+        {
+          "slug": "6",
+          "size": "3rem",
+          "name": "6"
+        },
+        {
+          "slug": "7",
+          "size": "3.5rem",
+          "name": "7"
+        },
+        {
+          "slug": "8",
+          "size": "4rem",
+          "name": "8"
+        },
+        {
+          "slug": "9",
+          "size": "4.5rem",
+          "name": "9"
+        },
+        {
+          "slug": "10",
+          "size": "5rem",
+          "name": "10"
+        },
+        {
+          "slug": "15",
+          "size": "7.5rem",
+          "name": "15"
+        },
+        {
+          "slug": "105",
+          "size": "0.75rem",
+          "name": "105"
+        },
+        {
+          "slug": "205",
+          "size": "1.25rem",
+          "name": "205"
+        },
+        {
+          "slug": "2px",
+          "size": "0.125rem",
+          "name": "2px"
+        },
+        {
+          "slug": "05",
+          "size": "0.25rem",
+          "name": "05"
+        }
+      ],
+      "spacingScale": {
+        "operator": "*",
+        "increment": 1.5,
+        "steps": 7,
+        "mediumStep": 1.5,
+        "unit": "rem"
+      },
+      "blockGap": true,
+      "margin": true,
+      "padding": true,
+      "units": [
+        "px",
+        "em",
+        "rem",
+        "vh",
+        "vw",
+        "%"
+      ]
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "dimensions": {
+      "minHeight": true
+    },
+    "layout": {
+      "contentSize": "65rem",
+      "wideSize": "87.5rem"
+    },
+    "custom": {
+      "spacing": {
+        "1": "0.5rem",
+        "2": "1rem",
+        "3": "1.5rem",
+        "4": "2rem",
+        "5": "2.5rem",
+        "6": "3rem",
+        "7": "3.5rem",
+        "8": "4rem",
+        "9": "4.5rem",
+        "10": "5rem",
+        "15": "7.5rem",
+        "105": "0.75rem",
+        "205": "1.25rem",
+        "2px": "0.125rem",
+        "05": "0.25rem"
+      },
+      "fontSize": {
+        "micro": "0.625rem",
+        "2xs": "0.688rem",
+        "xs": "0.75rem",
+        "sm": "0.813rem",
+        "md": "0.875rem",
+        "lg": "1rem",
+        "xl": "1.125rem",
+        "2xl": "1.25rem",
+        "3xl": "1.5rem",
+        "4xl": "1.875rem",
+        "5xl": "2.25rem",
+        "6xl": "3rem",
+        "7xl": "3.75rem",
+        "8xl": "4.5rem",
+        "9xl": "6rem"
+      },
+      "colors": {
+        "primary": {
+          "lightest": "#eff6ff",
+          "lighter": "#dbeafe",
+          "light": "#93c5fd",
+          "default": "#005ea2",
+          "vivid": "#0050d8",
+          "dark": "#1e40af",
+          "darker": "#1e3a8a",
+          "darkest": "#1e293b"
+        },
+        "secondary": {
+          "lightest": "#fef2f2",
+          "lighter": "#fecaca",
+          "light": "#f87171",
+          "default": "#dc2626",
+          "vivid": "#e11d48",
+          "dark": "#b91c1c",
+          "darker": "#991b1b",
+          "darkest": "#7f1d1d"
+        },
+        "base": {
+          "lightest": "#f9fafb",
+          "lighter": "#f3f4f6",
+          "light": "#d1d5db",
+          "default": "#6b7280",
+          "dark": "#4b5563",
+          "darker": "#374151",
+          "darkest": "#1f2937"
+        },
+        "success": {
+          "lighter": "#dcfce7",
+          "light": "#bbf7d0",
+          "default": "#00a91c",
+          "dark": "#166534"
+        },
+        "warning": {
+          "lighter": "#fef3c7",
+          "light": "#fde68a",
+          "default": "#ffbe2e",
+          "dark": "#d97706"
+        },
+        "error": {
+          "lighter": "#fecaca",
+          "light": "#f87171",
+          "default": "#b50909",
+          "dark": "#dc2626"
+        },
+        "info": {
+          "lighter": "#dbeafe",
+          "light": "#93c5fd",
+          "default": "#2563eb",
+          "dark": "#1d4ed8"
+        }
+      }
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var:preset|color|base-lightest",
+      "text": "var:preset|color|base-darkest"
+    },
+    "typography": {
+      "fontFamily": "var:preset|font-family|source-sans-pro",
+      "fontSize": "var:preset|font-size|lg",
+      "lineHeight": "1.5"
+    },
+    "spacing": {
+      "blockGap": "var:preset|spacing|3"
+    },
+    "elements": {
+      "link": {
+        "color": {
+          "text": "var:preset|color|primary-default"
+        },
+        ":hover": {
+          "color": {
+            "text": "var:preset|color|primary-dark"
+          }
+        }
+      },
+      "heading": {
+        "typography": {
+          "fontFamily": "var:preset|font-family|source-sans-pro",
+          "fontWeight": "700"
+        }
+      },
+      "h1": {
+        "typography": {
+          "fontSize": "var:preset|font-size|6xl",
+          "lineHeight": "1.2"
+        }
+      },
+      "h2": {
+        "typography": {
+          "fontSize": "var:preset|font-size|5xl",
+          "lineHeight": "1.3"
+        }
+      },
+      "h3": {
+        "typography": {
+          "fontSize": "var:preset|font-size|4xl",
+          "lineHeight": "1.4"
+        }
+      },
+      "h4": {
+        "typography": {
+          "fontSize": "var:preset|font-size|3xl",
+          "lineHeight": "1.4"
+        }
+      },
+      "h5": {
+        "typography": {
+          "fontSize": "var:preset|font-size|2xl",
+          "lineHeight": "1.5"
+        }
+      },
+      "h6": {
+        "typography": {
+          "fontSize": "var:preset|font-size|xl",
+          "lineHeight": "1.5"
+        }
+      }
+    },
+    "blocks": {
+      "core/button": {
+        "typography": {
+          "fontSize": "var:preset|font-size|lg",
+          "fontWeight": "600"
+        },
+        "spacing": {
+          "padding": {
+            "top": "var:preset|spacing|105",
+            "right": "var:preset|spacing|205",
+            "bottom": "var:preset|spacing|105",
+            "left": "var:preset|spacing|205"
+          }
+        }
+      },
+      "core/group": {
+        "spacing": {
+          "margin": {
+            "top": "0px",
+            "bottom": "var:preset|spacing|4"
+          }
+        }
+      }
+    }
+  },
+  "templateParts": [
+    {
+      "name": "header",
+      "title": "Header",
+      "area": "header"
+    },
+    {
+      "name": "header-government",
+      "title": "Government Header",
+      "area": "header"
+    },
+    {
+      "name": "footer",
+      "title": "Footer",
+      "area": "footer"
+    },
+    {
+      "name": "footer-government",
+      "title": "Government Footer",
+      "area": "footer"
+    },
+    {
+      "name": "sidebar-navigation",
+      "title": "Sidebar Navigation",
+      "area": "uncategorized"
+    }
+  ],
+  "customTemplates": [
+    {
+      "name": "page-government",
+      "title": "Government Page",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-handbook",
+      "title": "Handbook Page",
+      "postTypes": [
+        "page"
+      ]
+    }
+  ]
+}

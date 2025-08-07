@@ -43,6 +43,10 @@ function setup() {
 	add_theme_support( 'custom-line-height' );
 	add_theme_support( 'experimental-link-color' );
 	add_theme_support( 'appearance-tools' );
+	
+	// Add Full Site Editing support
+	add_theme_support( 'block-templates' );
+	add_theme_support( 'block-template-parts' );
 
 	// Register navigation menus
 	register_nav_menus( array(
