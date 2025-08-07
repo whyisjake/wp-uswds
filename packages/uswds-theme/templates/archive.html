@@ -1,0 +1,110 @@
+<!-- wp:template-part {"slug":"header-government","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"2rem","bottom":"3rem","left":"1rem","right":"1rem"}}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
+<main class="wp-block-group" style="padding-top:2rem;padding-right:1rem;padding-bottom:3rem;padding-left:1rem">
+	<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group" style="margin-bottom:3rem">
+		<!-- wp:query-title {"type":"archive","style":{"typography":{"fontSize":"2.5rem","fontWeight":"700","lineHeight":"1.2"},"spacing":{"margin":{"bottom":"1rem","top":"0"}}},"textColor":"base-darkest"} /-->
+		
+		<!-- wp:term-description {"style":{"typography":{"fontSize":"1.1rem","lineHeight":"1.6"},"spacing":{"margin":{"bottom":"2rem"}}}} /-->
+
+		<!-- wp:group {"style":{"spacing":{"padding":{"top":"1rem","bottom":"1rem","left":"1.5rem","right":"1.5rem"}},"border":{"radius":"4px","width":"1px","style":"solid","color":"#005ea2"}},"backgroundColor":"primary-lightest","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+		<div class="wp-block-group has-border-color has-primary-lightest-background-color has-background" style="border-color:#005ea2;border-style:solid;border-width:1px;border-radius:4px;padding-top:1rem;padding-right:1.5rem;padding-bottom:1rem;padding-left:1.5rem">
+			<!-- wp:paragraph {"style":{"typography":{"fontSize":"0.95rem","fontWeight":"600"}},"textColor":"primary-dark"} -->
+			<p class="has-primary-dark-color has-text-color" style="font-size:0.95rem;font-weight:600">📰 Official Government News & Updates</p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph {"style":{"typography":{"fontSize":"0.9rem"}},"textColor":"primary-dark"} -->
+			<p class="has-primary-dark-color has-text-color" style="font-size:0.9rem">Stay informed with the latest announcements and information</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true}} -->
+	<div class="wp-block-query">
+		<!-- wp:post-template {"style":{"spacing":{"blockGap":"2rem"}},"layout":{"type":"default","columnCount":1}} -->
+			<!-- wp:group {"style":{"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"2rem","right":"2rem"},"margin":{"bottom":"2rem"}},"border":{"radius":"4px","width":"1px","style":"solid","color":"#dfe1e2"}},"backgroundColor":"base-lightest","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-border-color has-base-lightest-background-color has-background" style="border-color:#dfe1e2;border-style:solid;border-width:1px;border-radius:4px;margin-bottom:2rem;padding-top:2rem;padding-right:2rem;padding-bottom:2rem;padding-left:2rem">
+				<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"1rem"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"top"}} -->
+				<div class="wp-block-group" style="margin-bottom:1rem">
+					<!-- wp:post-date {"style":{"typography":{"fontSize":"0.9rem","fontWeight":"600"}},"textColor":"primary-default"} /-->
+					
+					<!-- wp:post-terms {"term":"category","style":{"typography":{"fontSize":"0.85rem"}},"textColor":"base-dark"} /-->
+				</div>
+				<!-- /wp:group -->
+
+				<!-- wp:post-title {"level":2,"isLink":true,"style":{"typography":{"fontSize":"1.75rem","fontWeight":"700","lineHeight":"1.3"},"spacing":{"margin":{"bottom":"1rem","top":"0"}}},"textColor":"base-darkest"} /-->
+
+				<!-- wp:post-excerpt {"moreText":"Read full article →","style":{"typography":{"fontSize":"1rem","lineHeight":"1.6"},"spacing":{"margin":{"bottom":"1.5rem"}}}} /-->
+
+				<!-- wp:group {"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+				<div class="wp-block-group">
+					<!-- wp:post-author {"showAvatar":false,"style":{"typography":{"fontSize":"0.9rem"}},"textColor":"base-dark"} /-->
+					
+					<!-- wp:post-terms {"term":"post_tag","style":{"typography":{"fontSize":"0.85rem"}},"textColor":"base-dark"} /-->
+				</div>
+				<!-- /wp:group -->
+			</div>
+			<!-- /wp:group -->
+		<!-- /wp:post-template -->
+
+		<!-- wp:group {"style":{"spacing":{"margin":{"top":"3rem"}}},"layout":{"type":"constrained"}} -->
+		<div class="wp-block-group" style="margin-top:3rem">
+			<!-- wp:query-pagination {"paginationArrow":"arrow","layout":{"type":"flex","justifyContent":"center"}} -->
+				<!-- wp:query-pagination-previous {"style":{"typography":{"fontSize":"0.95rem"}}} /-->
+				
+				<!-- wp:query-pagination-numbers {"style":{"typography":{"fontSize":"0.95rem"}}} /-->
+				
+				<!-- wp:query-pagination-next {"style":{"typography":{"fontSize":"0.95rem"}}} /-->
+			<!-- /wp:query-pagination -->
+		</div>
+		<!-- /wp:group -->
+
+		<!-- wp:query-no-results -->
+			<!-- wp:group {"style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem","left":"2rem","right":"2rem"}}},"layout":{"type":"constrained"}} -->
+			<div class="wp-block-group" style="padding-top:3rem;padding-right:2rem;padding-bottom:3rem;padding-left:2rem">
+				<!-- wp:wp-uswds/alert {"type":"info","heading":"No posts found"} -->
+				<div class="wp-block-wp-uswds-alert usa-alert usa-alert--info">
+					<div class="usa-alert__body">
+						<h4 class="usa-alert__heading">No posts found</h4>
+						<!-- wp:paragraph -->
+						<p>There are currently no posts to display in this category. Please check back later for updates.</p>
+						<!-- /wp:paragraph -->
+					</div>
+				</div>
+				<!-- /wp:wp-uswds/alert -->
+
+				<!-- wp:group {"style":{"spacing":{"margin":{"top":"2rem"}}},"layout":{"type":"flex","justifyContent":"center"}} -->
+				<div class="wp-block-group" style="margin-top:2rem">
+					<!-- wp:wp-uswds/button {"text":"Return to Homepage","url":"/","variant":"default"} -->
+					<a class="wp-block-wp-uswds-button usa-button" href="/">Return to Homepage</a>
+					<!-- /wp:wp-uswds/button -->
+				</div>
+				<!-- /wp:group -->
+			</div>
+			<!-- /wp:group -->
+		<!-- /wp:query-no-results -->
+	</div>
+	<!-- /wp:query -->
+
+	<!-- wp:group {"style":{"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"2rem","right":"2rem"},"margin":{"top":"4rem"}},"border":{"radius":"4px","width":"1px","style":"solid","color":"#dfe1e2"}},"backgroundColor":"base-lightest","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group has-border-color has-base-lightest-background-color has-background" style="border-color:#dfe1e2;border-style:solid;border-width:1px;border-radius:4px;margin-top:4rem;padding-top:2rem;padding-right:2rem;padding-bottom:2rem;padding-left:2rem">
+		<!-- wp:heading {"level":3,"style":{"typography":{"fontSize":"1.3rem","fontWeight":"600"},"spacing":{"margin":{"bottom":"1rem","top":"0"}}},"textColor":"base-darkest"} -->
+		<h3 class="wp-block-heading has-base-darkest-color has-text-color" style="margin-top:0;margin-bottom:1rem;font-size:1.3rem;font-weight:600">Stay updated</h3>
+		<!-- /wp:heading -->
+
+		<!-- wp:paragraph {"style":{"typography":{"fontSize":"0.95rem","lineHeight":"1.6"},"spacing":{"margin":{"bottom":"1.5rem"}}}} -->
+		<p style="margin-bottom:1.5rem;font-size:0.95rem;line-height:1.6">Subscribe to receive the latest news and updates directly to your inbox.</p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:wp-uswds/button {"text":"Subscribe to Updates","url":"/subscribe","variant":"outline"} -->
+		<a class="wp-block-wp-uswds-button usa-button usa-button--outline" href="/subscribe">Subscribe to Updates</a>
+		<!-- /wp:wp-uswds/button -->
+	</div>
+	<!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer-government","tagName":"footer"} /-->
