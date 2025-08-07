@@ -6,6 +6,8 @@
   "scripts": {
     "install:assets": "node scripts/install-uswds-assets.js",
     "generate:blocks": "node scripts/generate-blocks.js",
+    "generate:theme-json": "node scripts/generate-theme-json.js",
+    "validate:theme-json": "node scripts/validate-theme-json.js",
     "deploy": "node scripts/deploy.js",
     "nvm:use": "nvm use",
     "preinstall": "node scripts/check-node-version.js",
