@@ -1,0 +1,37 @@
+<!-- wp:template-part {"slug":"header-government","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"1rem","right":"1rem"}}},"layout":{"type":"constrained","contentSize":"1000px"}} -->
+<main class="wp-block-group" style="padding-top:2rem;padding-right:1rem;padding-bottom:2rem;padding-left:1rem">
+	<!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"tagName":"section","displayLayout":{"type":"list","columns":3},"layout":{"type":"constrained"}} -->
+	<section class="wp-block-query">
+		<!-- wp:post-template {"style":{"spacing":{"blockGap":"2rem"}},"layout":{"type":"grid","columnCount":1}} -->
+			<!-- wp:group {"style":{"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"}},"border":{"radius":"4px","width":"1px","style":"solid","color":"#dfe1e2"}},"backgroundColor":"base-lightest","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group has-border-color has-base-lightest-background-color has-background" style="border-color:#dfe1e2;border-style:solid;border-width:1px;border-radius:4px;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
+				<!-- wp:post-title {"level":2,"isLink":true,"style":{"typography":{"fontSize":"1.5rem","fontWeight":"700"},"spacing":{"margin":{"bottom":"0.75rem","top":"0"}}},"textColor":"primary-default"} /-->
+				
+				<!-- wp:post-date {"style":{"typography":{"fontSize":"0.9rem"},"spacing":{"margin":{"bottom":"1rem"}}},"textColor":"base-dark"} /-->
+				
+				<!-- wp:post-excerpt {"style":{"typography":{"lineHeight":"1.6"}}} /-->
+				
+				<!-- wp:post-terms {"term":"category","style":{"typography":{"fontSize":"0.8rem"}},"textColor":"base-dark"} /-->
+			</div>
+			<!-- /wp:group -->
+		<!-- /wp:post-template -->
+
+		<!-- wp:query-pagination {"paginationArrow":"arrow","showLabel":false,"style":{"spacing":{"margin":{"top":"3rem"}}}} -->
+			<!-- wp:query-pagination-previous {"fontSize":"lg"} /-->
+			<!-- wp:query-pagination-numbers /-->
+			<!-- wp:query-pagination-next {"fontSize":"lg"} /-->
+		<!-- /wp:query-pagination -->
+
+		<!-- wp:query-no-results -->
+			<!-- wp:paragraph {"placeholder":"Add text or blocks that will display when a query returns no results."} -->
+			<p>No posts found.</p>
+			<!-- /wp:paragraph -->
+		<!-- /wp:query-no-results -->
+	</section>
+	<!-- /wp:query -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer-government","tagName":"footer"} /-->
